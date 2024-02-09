@@ -20,6 +20,22 @@ app.get("/thirdRoute/:someValue/:someOtherValue", (req, res) => {
     res.send({ name: firstValue});
 });
 
+let balance = 100;
+app.get("/wallet/:withdrawalAmount", (req, res) => {
+    const withdrawalAmount = Number(req.params.withdrawalAmount);
+
+    if(!withdrawalAmount) res.send({ data: "YOu have submitted an incorrect amount" });
+
+    if ((balance - withdrawalAmount) < 0) {
+        res.send({ data: "Sorry, not enough funds." });
+    } else {
+        balance -= withdrawalAmount;
+
+        res.send({ data: balance });
+    }
+    
+})
+
 app.get("/page", (req, res) => {
     res.send("<h1>Welcome to my page</h1>");
 });
