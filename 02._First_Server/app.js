@@ -1,7 +1,9 @@
-//const express = require("express");
-//const app = express();
+const express = require("express");
+const app = express();
 
-const app = require("express")();
+//const app = require("express")();
+
+app.use(express.json());
 
 // route
         // endpoint 
@@ -34,7 +36,25 @@ app.get("/wallet/:withdrawalAmount", (req, res) => {
         res.send({ data: balance });
     }
     
-})
+});
+
+
+// /saySomethingNiceAboutMe/hej?handome=very&tall=indeed&cool=always
+app.get("/saySomethingNiceAboutMe/:greeting", (req,res) => {
+    console.log(req.params.greeting);
+    console.log(req.query);
+
+    if (req.query.handsome !== "very"){
+        return res.send({ data: "ain't no thang" })
+    }
+
+    return res.send({ data: 'thanks cool cat' })
+});
+
+app.post("/postman", (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+});
 
 app.get("/page", (req, res) => {
     res.send("<h1>Welcome to my page</h1>");
