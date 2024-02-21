@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
+
 let drinks = [
 	{ id: 1, name: 'Coca-Cola', type: 'Soda'},
 	{ id: 2, name: 'Pepsi', type: 'Soda' },
 	{ id: 3, name: 'Faxe-Kondi', type: 'Soda' },
-	{ id: 4, name: 'Tuborg Classic', type: 'Beer', alcohol_percentage: '4.7%' },
+	{ id: 4, name: 'Tuborg Classic', type: 'Beer'},
 	{ id: 5, name: 'Carlsberg Nordic', type: 'Non Alcoholic Beer' },
 	{ id: 6, name: 'Gin & Tonic', type: 'Alcoholi Beverage' },
   ];
@@ -29,6 +32,24 @@ let drinks = [
 	res.send(drink);
   });
 
-  app.listen(8080);
+  app.post('/drinks', (req, res) => {
+	const newId = drinks.reduce((maxId, drink) => Math.max(maxId, drink.id), 0) + 1;
+
+	if (!req.body.name){
+		return res.status(422).send({ data: 'No name added for drink' })
+	}
+
+	if (!req.body.type){
+		return res.status(422).send({ data: 'No type added for drink' })
+	}
+
+  	const newDrink = { id: newId, ...req.body };
+  	drinks.push(newDrink);
+
+	res.send(newDrink);
+  });
+
+  const PORT = 8080;
+  app.listen(PORT, () => console.log("Server is running on", PORT));
 
 
