@@ -18,15 +18,15 @@ let drinks = [
   });
 
   app.get('/drinks/:id', (req, res) => {
-	const id = req.params.id;
-	const drink = drinks.find(d => d.id === Number(id));
+	const id = Number(req.params.id);
+	const drink = drinks.find(d => d.id === id);
 
 	if (!Number(id)){
-		res.send({ message: 'id is not valid, not a number' });
+		res.status(400).send({ message: 'id is not valid, not a number' });
 	}
 
 	if (!drink){
-		res.send({ message: `drink not found with id ${id}` });
+		res.status(404).send({ message: `drink not found with id ${id}` });
 	}
 
 	res.send(drink);
@@ -48,6 +48,27 @@ let drinks = [
 
 	res.send(newDrink);
   });
+
+
+  app.delete('/drinks/:id', (req, res) => {
+	const id = Number(req.params.id);
+	const drink = drinks.find(d => d.id === id);
+	const drinkPosition = drinks.indexOf(drink)
+
+	if (!Number(id)){
+		res.status(400).send({ message: 'id is not valid, not a number' });
+	}
+
+	if (!drink){
+		res.status(404).send({ message: `drink not found with id ${id}` });
+	}
+
+	drinks.splice(drinkPosition, 1);
+
+	res.status(200).send({ data: "drink deleted" })
+  });
+
+
 
   const PORT = 8080;
   app.listen(PORT, () => console.log("Server is running on", PORT));
