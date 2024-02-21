@@ -49,6 +49,21 @@ let drinks = [
 	res.send(newDrink);
   });
 
+  app.put('/drinks/:id', (req, res) => {
+	const id = Number(req.params.id);
+	const drink = drinks.find(d => d.id === id);
+	const drinkPosition = drinks.indexOf(drink)
+
+
+	if (drinkPosition === -1){
+		return res.status(404).send({ data: "Drink not found with id ", id });
+	}
+	
+	const updatedDrink = { id, ...req.body };
+	drinks[drinkPosition] = updatedDrink;
+	res.send(updatedDrink);
+  });
+  
 
   app.delete('/drinks/:id', (req, res) => {
 	const id = Number(req.params.id);
@@ -65,7 +80,7 @@ let drinks = [
 
 	drinks.splice(drinkPosition, 1);
 
-	res.status(200).send({ data: "drink deleted" })
+	res.send({ data: "drink deleted" })
   });
 
 
