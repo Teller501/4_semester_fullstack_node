@@ -1,0 +1,27 @@
+{
+  "name": "date",
+  "version": "0.0.1",
+  "description": "Working with dates in Javascript",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Teller501/4_semester_fullstack_node.git"
+  },
+  "keywords": [
+    "date",
+    "javascript",
+    "express"
+  ],
+  "author": "Anders Teller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Teller501/4_semester_fullstack_node/issues"
+  },
+  "homepage": "https://github.com/Teller501/4_semester_fullstack_node#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
