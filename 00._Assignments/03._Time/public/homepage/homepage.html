@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <style>
+      body {
+        background-color: #ffd27f;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Oswald", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      p {
+        font-family: "Lora", serif;
+        font-optical-sizing: auto;
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      #header-section {
+        margin-bottom: 100px;
+        text-align: center;
+      }
+
+      #day-length-cards {
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        grid-template-rows: 30% 30% 30%;
+        justify-content: center;
+      }
+
+      .day-length-card {
+        background-color: #ffb731;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-left: 50px;
+        margin-right: 50px;
+        height: 250px;
+      }
+
+      .day-length-card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .card-container {
+        padding: 2px 16px;
+      }
+
+      .city {
+        margin-bottom: 40px;
+      }
+    </style>
+    <title>Nox Aurora</title>
+  </head>
+  <body>
+    <div id="header-section">
+      <h1 id="title">Nox Aurora</h1>
+      <p>Your Day Length Visualizer</p>
+    </div>
+    <div id="day-length-cards">
+      <div class="day-length-card">
+        <div class="card-container">
+          <h3 class="city" id="city-copenhagen">Copenhagen</h3>
+          <p id="date-copenhagen">Date:</p>
+          <p id="sunrise-copenhagen">Sunrise:</p>
+          <p id="sunset-copenhagen">Sunset:</p>
+          <p id="day-length-copenhagen">Day Length:</p>
+        </div>
+      </div>
+      <div class="day-length-card">
+        <div class="card-container">
+          <h3 class="city" id="city-london">London</h3>
+          <p id="date-london">Date:</p>
+          <p id="sunrise-london">Sunrise:</p>
+          <p id="sunset-london">Sunset:</p>
+          <p id="day-length-london">Day Length:</p>
+        </div>
+      </div>
+      <div class="day-length-card">
+        <div class="card-container">
+          <h3 class="city" id="city-new-york">New York</h3>
+          <p id="date-new-york">Date:</p>
+          <p id="sunrise-new-york">Sunrise:</p>
+          <p id="sunset-new-york">Sunset:</p>
+          <p id="day-length-new-york">Day Length:</p>
+        </div>
+      </div>
+    </div>
+    <div id="day-length-search"></div>
+
+    <script>
+      function updateCityData(city, country, date) {
+        city = city.replace(/\s+/g, "-");
+        const apiKey = "KJA+3LGAqlJAp7XeyfXs9w==hACKY5inYLeIoqUn";
+        const geocodingUrl = `https://api.api-ninjas.com/v1/geocoding?city=${city}&country=${country}`;
+
+        fetch(geocodingUrl, {
+          method: "GET",
+          headers: {
+            "X-Api-Key": apiKey,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const latitude = data[0].latitude;
+            const longitude = data[0].longitude;
+            const sunriseSunsetUrl = `https://api.sunrise-sunset.org/json?lat=${latitude}&lng=${longitude}&date=${date}`;
+
+            fetch(sunriseSunsetUrl)
+              .then((response) => response.json())
+              .then((data) => {
+                const sunrise = data.results.sunrise;
+                const sunset = data.results.sunset;
+                const dayLength = data.results.day_length;
+
+                document.getElementById(
+                  `date-${city}`
+                ).textContent = `Date: ${date}`;
+                document.getElementById(
+                  `sunrise-${city}`
+                ).textContent = `Sunrise: ${sunrise}`;
+                document.getElementById(
+                  `sunset-${city}`
+                ).textContent = `Sunset: ${sunset}`;
+                document.getElementById(
+                  `day-length-${city}`
+                ).textContent = `Day Length: ${dayLength} hours`;
+              });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      const date = new Date();
+      const today = date.toISOString().split("T")[0];
+
+      updateCityData("copenhagen", "denmark", today);
+      updateCityData("london", "england", today);
+      updateCityData("new york", "usa", today);
+    </script>
+  </body>
+</html>
