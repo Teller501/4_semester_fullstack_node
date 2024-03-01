@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
 
+app.use(express.static("public"));
+
+// const helicopterFactoryFile = require("./util/helicopterFactory.js");
+// console.log(helicopterFactoryFile.helicopterFactory());
+
+const { helicopterFactory } = require("./util/helicopterFactory.js");
+console.log(helicopterFactory());
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/homepage/homepage.html");
 });
@@ -23,6 +31,12 @@ app.get("/greeting", (req, res) => {
 
 app.get("/knownpeople", (req, res) => {
   res.send({ data: knownNames.length });
+});
+
+app.get("/proxy", (req, res) => {
+  fetch("https://www.google.com")
+    .then((response) => response.text())
+    .then((result) => res.send(result));
 });
 
 const PORT = 8080;
