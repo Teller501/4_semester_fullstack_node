@@ -64,6 +64,17 @@
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
       }
 
+      .day-length-result-card {
+        background-color: #ffb731;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-bottom: 100px;
+        height: 250px;
+        width: 400px;
+        justify-content: center;
+      }
+
       .card-container {
         padding: 2px 16px;
       }
@@ -100,7 +111,7 @@
       }
 
       button a:hover {
-        color: black; /* Change text color on hover for consistency */
+        color: black;
       }
 
       #searchSection {
@@ -108,57 +119,64 @@
         display: grid;
         justify-content: center;
       }
+
+      #inputSection {
+        display: grid;
+        justify-content: center;
+      }
+
+      #day-length-search {
+        display: grid;
+        justify-content: center;
+      }
     </style>
-    <title>Nox Aurora</title>
+    <title>Search Country And City</title>
   </head>
   <body>
     <div id="header-section">
-      <h1 id="title">Nox Aurora</h1>
-      <p>Your Day Length Visualizer</p>
+      <h1 id="title">Search Country & City</h1>
+      <p>For displaying the day length</p>
     </div>
-    <div id="day-length-cards">
-      <div class="day-length-card">
-        <div class="card-container">
-          <h3 class="city" id="city-copenhagen">Copenhagen</h3>
-          <p id="date-copenhagen">Date:</p>
-          <p id="sunrise-copenhagen">Sunrise:</p>
-          <p id="sunset-copenhagen">Sunset:</p>
-          <p id="day-length-copenhagen">Day Length:</p>
+    <div id="day-length-search">
+      <div id="resultCard">
+        <div class="day-length-result-card">
+          <div class="card-container">
+            <h3 class="city" id="city-result"></h3>
+            <p id="date-result">Date:</p>
+            <p id="sunrise-result">Sunrise:</p>
+            <p id="sunset-result">Sunset:</p>
+            <p id="day-length-result">Day Length:</p>
+          </div>
         </div>
       </div>
-      <div class="day-length-card">
-        <div class="card-container">
-          <h3 class="city" id="city-london">London</h3>
-          <p id="date-london">Date:</p>
-          <p id="sunrise-london">Sunrise:</p>
-          <p id="sunset-london">Sunset:</p>
-          <p id="day-length-london">Day Length:</p>
-        </div>
+      <div id="inputSection">
+        <input type="text" id="countryInput" placeholder="Country" />
+        <input type="text" id="cityInput" placeholder="City" />
+        <input type="date" id="dateInput" placeholder="12/02/2023" />
+        <button id="searchButton">Search</button>
       </div>
-      <div class="day-length-card">
-        <div class="card-container">
-          <h3 class="city" id="city-new-york">New York</h3>
-          <p id="date-new-york">Date:</p>
-          <p id="sunrise-new-york">Sunrise:</p>
-          <p id="sunset-new-york">Sunset:</p>
-          <p id="day-length-new-york">Day Length:</p>
-        </div>
-      </div>
-    </div>
-    <div id="searchSection">
-      <button><a href="/searchCountry">Search for country and city</a></button>
     </div>
 
     <script>
-      function updateCityData(city, country, date) {
-        city = city.replace(/\s+/g, "-");
+      const searchButton = document.getElementById("searchButton");
+      const countryInput = document.getElementById("countryInput");
+      const cityInput = document.getElementById("cityInput");
+      const dateInput = document.getElementById("dateInput");
+      const resultCard = document.getElementById("resultCard");
+
+      function searchCountryCity() {
+        const country = countryInput.value;
+        const city = cityInput.value;
+        const date = dateInput.value;
+
+        const dateResult = document.getElementById("date-result");
+        const sunriseResult = document.getElementById("sunrise-result");
+        const sunsetResult = document.getElementById("sunset-result");
+        const dayLengthResult = document.getElementById("day-length-result");
+        const cityResult = document.getElementById("city-result");
+
         const apiKey = "KJA+3LGAqlJAp7XeyfXs9w==hACKY5inYLeIoqUn";
         const geocodingUrl = `https://api.api-ninjas.com/v1/geocoding?city=${city}&country=${country}`;
-
-        const dateResult = document.getElementById(`date-${city}`);
-        const sunriseResult = document.getElementById(`sunrise-${city}`);
-        const sunsetResult = document.getElementById(`sunset-${city}`);
-        const dayLengthResult = document.getElementById(`day-length-${city}`);
 
         fetch(geocodingUrl, {
           method: "GET",
@@ -183,17 +201,15 @@
                 sunriseResult.textContent = `Sunrise: ${sunrise}`;
                 sunsetResult.textContent = `Sunset: ${sunset}`;
                 dayLengthResult.textContent = `Day Length: ${dayLength} hours`;
+
+                resultCard.style.display = "grid";
               });
           })
           .catch((error) => console.error("Error:", error));
       }
 
-      const date = new Date();
-      const today = date.toISOString().split("T")[0];
-
-      updateCityData("copenhagen", "denmark", today);
-      updateCityData("london", "england", today);
-      updateCityData("new york", "usa", today);
+      resultCard.style.display = "none";
+      searchButton.addEventListener("click", searchCountryCity);
     </script>
   </body>
 </html>
