@@ -1,0 +1,29 @@
+{
+    "name": "teller_mandatory_i",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "the first mandatory assignment for the fullstack node js course on KEA (2024)",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Teller501/4_semester_fullstack_node.git"
+    },
+    "keywords": [
+        "node",
+        "documentation",
+        "code",
+        "express"
+    ],
+    "author": "Anders Teller",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Teller501/4_semester_fullstack_node/issues"
+    },
+    "homepage": "https://github.com/Teller501/4_semester_fullstack_node#readme",
+    "dependencies": {
+        "express": "^4.18.3"
+    }
+}
