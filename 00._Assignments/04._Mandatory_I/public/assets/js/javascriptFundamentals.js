@@ -9,6 +9,7 @@ const runCodeButton = document.getElementById("run-code-1");
 
 runCodeButton.addEventListener("click", () => {
     outputDiv.style.display = "block";
+    outputText.textContent = "";
 
     typeEffect(executeCode(code), outputText);
 });
