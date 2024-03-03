@@ -1,0 +1,72 @@
+@font-face {
+    font-family: "crayonLibre";
+    src: url("/assets/fonts/CrayonLibre-vm6r9.ttf");
+}
+
+body {
+    color: #a7b04b;
+    background-color: #263407;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "crayonLibre";
+    color: #a7b04b;
+}
+
+p {
+    color: white;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+    justify-items: center;
+    height: 100vh;
+}
+
+pre {
+    background-color: #263407;
+    border: 1px solid #a7b04b;
+    border-left: 3px solid #a7b04b;
+    color: white;
+    font-family: "crayonLibre", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    border-radius: 4px;
+}
+
+code {
+    background-color: transparent;
+    color: inherit;
+}
+
+.output-container {
+    background-color: #2d2d2d;
+    border: 1px solid #a7b04b;
+    border-left: 3px solid #a7b04b;
+    margin-bottom: 1.6em;
+    overflow: auto;
+    display: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    border-radius: 4px;
+}
+
+.run-code-button {
+    background-color: #a7b04b;
+    color: white;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
