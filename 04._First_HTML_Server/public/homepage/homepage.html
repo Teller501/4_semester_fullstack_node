@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./homepage/homepage.css" />
-    <title>Homepage</title>
-  </head>
-  <body>
-    <h1>Does this work?!?!?!?</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./homepage/homepage.css" />
+        <title>Homepage</title>
+    </head>
+    <body>
+        <h1>Does this work?!?!?!?</h1>
 
-    <div id="celebration-box" style="color: green">
-      <h3>Yes it does</h3>
-    </div>
+        <div id="celebration-box" style="color: green">
+            <h3>Yes it does</h3>
+        </div>
 
-    <input placeholder="Your name here" id="name-input" />
-    <button id="name-btn">Get Greeting</button>
+        <input placeholder="Your name here" id="name-input" />
+        <button id="name-btn">Get Greeting</button>
 
-    <h2 id="greeting-text"></h2>
+        <h2 id="greeting-text"></h2>
 
-    <a href="/publicsquare">public square</a>
+        <a href="/publicsquare">public square</a>
 
-    <script>
-      const nameInput = document.getElementById("name-input");
-      const greetingH2 = document.getElementById("greeting-text");
-      const nameBtn = document.getElementById("name-btn");
+        <script>
+            setTimeout(() => (window.location.href = "/publicsquare"), 3000);
+        </script>
+        <script>
+            const nameInput = document.getElementById("name-input");
+            const greetingH2 = document.getElementById("greeting-text");
+            const nameBtn = document.getElementById("name-btn");
 
-      nameBtn.addEventListener("click", showGreeting);
+            nameBtn.addEventListener("click", showGreeting);
 
-      function showGreeting() {
-        const name = nameInput.value;
-        fetch(`/greeting?name=${name}`)
-          .then((response) => response.json())
-          .then((result) => {
-            greetingH2.textContent = result.data;
-          });
-      }
-    </script>
-    <script src="./homepage/homepage.js"></script>
-  </body>
+            function showGreeting() {
+                const name = nameInput.value;
+                fetch(`/greeting?name=${name}`)
+                    .then((response) => response.json())
+                    .then((result) => {
+                        greetingH2.textContent = result.data;
+                    });
+            }
+        </script>
+        <script src="./homepage/homepage.js"></script>
+    </body>
 </html>
