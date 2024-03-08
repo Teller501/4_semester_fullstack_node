@@ -4,18 +4,14 @@ const app = express();
 
 app.use(express.static("public"));
 
-import path from "path";
+import { homepagePage, javascriptFundamentalsPage } from "./util/readPages.js";
 
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve("public/pages/homepage/homepage.html"));
+    res.send(homepagePage);
 });
 
 app.get("/javascript-fundamentals", (req, res) => {
-    res.sendFile(
-        path.resolve(
-            "public/pages/javascriptFundamentals/javascriptFundamentals.html"
-        )
-    );
+    res.send(javascriptFundamentalsPage);
 });
 
 const PORT = 8080;

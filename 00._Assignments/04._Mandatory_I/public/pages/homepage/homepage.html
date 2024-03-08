@@ -1,121 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css"
-        />
-        <link rel="stylesheet" href="/assets/css/homepage.css" />
-        <title>Node JS Course Portfolio</title>
-    </head>
-    <body>
-        <main>
-            <div class="classroom-container">
-                <a
-                    href="/javascript-fundamentals"
-                    class="blackboard-item"
-                    id="blackboard-1"
-                    >Javascript Fundamentals
-                    <canvas class="chalk-effect"></canvas>
-                </a>
-                <a
-                    href="/nodejs-fundamentals"
-                    class="blackboard-item"
-                    id="blackboard-2"
-                    >Node.js Fundamentals <canvas class="chalk-effect"></canvas
-                ></a>
-                <a href="/express" class="blackboard-item" id="blackboard-3"
-                    >Express <canvas class="chalk-effect"></canvas
-                ></a>
-                <a href="/rest-api" class="blackboard-item" id="blackboard-4"
-                    >REST API <canvas class="chalk-effect"></canvas
-                ></a>
-                <a href="/url-anatomy" class="blackboard-item" id="blackboard-5"
-                    >URL Anatomy and Fetching
-                    <canvas class="chalk-effect"></canvas
-                ></a>
-                <a
-                    href="/web-development"
-                    class="blackboard-item"
-                    id="blackboard-6"
-                    >Web Development <canvas class="chalk-effect"></canvas
-                ></a>
-            </div>
-        </main>
+<div class="classroom-container">
+    <a href="/javascript-fundamentals" class="blackboard-item" id="blackboard-1"
+        >Javascript Fundamentals
+        <canvas class="chalk-effect"></canvas>
+    </a>
+    <a href="/nodejs-fundamentals" class="blackboard-item" id="blackboard-2"
+        >Node.js Fundamentals <canvas class="chalk-effect"></canvas
+    ></a>
+    <a href="/express" class="blackboard-item" id="blackboard-3"
+        >Express <canvas class="chalk-effect"></canvas
+    ></a>
+    <a href="/rest-api" class="blackboard-item" id="blackboard-4"
+        >REST API <canvas class="chalk-effect"></canvas
+    ></a>
+    <a href="/url-anatomy" class="blackboard-item" id="blackboard-5"
+        >URL Anatomy and Fetching <canvas class="chalk-effect"></canvas
+    ></a>
+    <a href="/web-development" class="blackboard-item" id="blackboard-6"
+        >Web Development <canvas class="chalk-effect"></canvas
+    ></a>
+</div>
 
-        <script>
-            const blackboardItems =
-                document.querySelectorAll(".blackboard-item");
+<script>
+    const blackboardItems = document.querySelectorAll(".blackboard-item");
 
-            blackboardItems.forEach((item) => {
-                const canvas = item.querySelector(".chalk-effect");
-                const ctx = canvas.getContext("2d");
-                const height = 1;
+    blackboardItems.forEach((item) => {
+        const canvas = item.querySelector(".chalk-effect");
+        const ctx = canvas.getContext("2d");
+        const height = 1;
 
-                function setCanvasSize() {
-                    canvas.width = item.offsetWidth;
-                    canvas.height = height;
-                    canvas.style.bottom = `-${height}px`;
-                }
+        function setCanvasSize() {
+            canvas.width = item.offsetWidth;
+            canvas.height = height;
+            canvas.style.bottom = `-${height}px`;
+        }
 
-                setCanvasSize();
-                window.addEventListener("resize", setCanvasSize);
+        setCanvasSize();
+        window.addEventListener("resize", setCanvasSize);
 
-                item.addEventListener("mouseenter", () =>
-                    drawChalkLine(canvas, ctx, height)
-                );
-                item.addEventListener("mouseleave", () => clearChalkLine(ctx));
-            });
+        item.addEventListener("mouseenter", () =>
+            drawChalkLine(canvas, ctx, height)
+        );
+        item.addEventListener("mouseleave", () => clearChalkLine(ctx));
+    });
 
-            function drawChalkLine(canvas, ctx, height) {
-                const width = canvas.width;
+    function drawChalkLine(canvas, ctx, height) {
+        const width = canvas.width;
 
-                let red = 255;
-                let green = 255;
-                let blue = 255;
+        let red = 255;
+        let green = 255;
+        let blue = 255;
 
-                const noiseRange = 5;
-                red += Math.floor(Math.random() * noiseRange * 2) - noiseRange;
-                green +=
-                    Math.floor(Math.random() * noiseRange * 2) - noiseRange;
-                blue += Math.floor(Math.random() * noiseRange * 2) - noiseRange;
+        const noiseRange = 5;
+        red += Math.floor(Math.random() * noiseRange * 2) - noiseRange;
+        green += Math.floor(Math.random() * noiseRange * 2) - noiseRange;
+        blue += Math.floor(Math.random() * noiseRange * 2) - noiseRange;
 
-                red = Math.max(Math.min(red, 255), 0);
-                green = Math.max(Math.min(green, 255), 0);
-                blue = Math.max(Math.min(blue, 255), 0);
+        red = Math.max(Math.min(red, 255), 0);
+        green = Math.max(Math.min(green, 255), 0);
+        blue = Math.max(Math.min(blue, 255), 0);
 
-                const chalkColor = `rgb(${red}, ${green}, ${blue})`;
+        const chalkColor = `rgb(${red}, ${green}, ${blue})`;
 
-                const minLineWidth = 0.5;
-                const maxLineWidth = 1.5;
-                const lineWidth =
-                    Math.random() * (maxLineWidth - minLineWidth) +
-                    minLineWidth;
+        const minLineWidth = 0.5;
+        const maxLineWidth = 1.5;
+        const lineWidth =
+            Math.random() * (maxLineWidth - minLineWidth) + minLineWidth;
 
-                ctx.strokeStyle = chalkColor;
-                ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = chalkColor;
+        ctx.lineWidth = lineWidth;
 
-                ctx.clearRect(0, 0, width, height);
-                ctx.beginPath();
-                ctx.moveTo(0, height / 2);
+        ctx.clearRect(0, 0, width, height);
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
 
-                let x = 0;
-                const drawAnimation = setInterval(() => {
-                    x++;
-                    if (x > width) {
-                        clearInterval(drawAnimation);
-                    } else {
-                        ctx.lineTo(x, height / 2);
-                        ctx.stroke();
-                    }
-                }, 5);
+        let x = 0;
+        const drawAnimation = setInterval(() => {
+            x++;
+            if (x > width) {
+                clearInterval(drawAnimation);
+            } else {
+                ctx.lineTo(x, height / 2);
+                ctx.stroke();
             }
+        }, 5);
+    }
 
-            function clearChalkLine(ctx) {
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            }
-        </script>
-    </body>
-</html>
+    function clearChalkLine(ctx) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+</script>
