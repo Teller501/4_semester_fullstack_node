@@ -28,6 +28,8 @@
 
         <script>
             let dogs = [];
+            const dogNameH1 = document.getElementById("dog-name");
+            const dogBioH3 = document.getElementById("dog-bio");
 
             const imageContainerDiv =
                 document.getElementById("image-container");
@@ -44,6 +46,9 @@
             getDogs();
 
             function createImageElement(dog) {
+                dogNameH1.textContent = dog.name;
+                dogBioH3.textContent = dog.bio;
+
                 const img = document.createElement("img");
                 img.src = dog.message;
                 img.id = "dog-image";
@@ -60,6 +65,8 @@
 
             function setupHammerPanEvents(dogImageImg) {
                 const hammertime = new Hammer(dogImageImg);
+                const dogNameH1 = document.getElementById("dog-name");
+                const dogBioH3 = document.getElementById("dog-bio");
 
                 hammertime.on("pan", (event) => {
                     // Calculate the new position based on the pan movement
