@@ -2,13 +2,52 @@
 <div id="container">
     <div class="documentation-item">
         <h3>Variables</h3>
-        <pre>
-                        <code class="code-snippet language-javascript" id="code-snippet-1">
-const greeting = 'Hello, Fede!';
-console.log(greeting);
-</code>
-                    </pre>
+        <p>
+            Variables are named elements that can hold values of any JavaScript
+            data type.
+        </p>
+        <p>There are 3 ways to declare variables:</p>
+        <ul>
+            <li><code class="language-javascript">var</code></li>
+            <li><code class="language-javascript">let</code></li>
+            <li><code class="language-javascript">const</code></li>
+        </ul>
 
+        <h4>var</h4>
+        <p>
+            <code class="language-javascript">var</code> was the main way of
+            declaring variables before
+            <code class="language-javascript">let</code> and
+            <code class="language-javascript">const</code> was introduced to
+            JavaScript
+        </p>
+
+        <p>
+            The problem with var is that it has either function scope or global
+            scope. When used in a function with an if statement for example, the
+            variable can be accessed both in the if block and outside of it.<br />
+            This concept is called hoisting, and it means that the variable
+            declaration is moved to the to of the function.
+        </p>
+
+        <p>An example of this behavior:</p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-1">
+function test(){
+    if (true) {
+        // inside if statement
+        var myVariable = "hello if statement"
+        console.log(myVariable)
+    }
+
+    // outside if statement
+    console.log(myVariable)
+}
+
+test()
+</code>
+        </pre>
         <button id="run-code-1" class="run-code-button">Run Code</button>
         <div id="output-1" class="output-container">
             <code
@@ -16,18 +55,223 @@ console.log(greeting);
                 class="output-text language-javascript"
             ></code>
         </div>
+
+        <h4>let</h4>
+        <p>
+            <code class="language-javascript">let</code> aims to fix some of the
+            problems that var has. <br /><br />
+            For example, <code class="language-javascript">let</code> is block
+            scoped, which means is is only accessible inside the curly brackets
+            <code class="language-javascript">{}</code> in which it is declared.
+        </p>
+
+        <p>
+            The same example as var but with
+            <code class="language-javascript">let</code>
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-2">
+function test(){
+    if (true) {
+        // inside if statement
+        let myVariable = "hello if statement"
+        console.log(myVariable)
+    }
+
+    // outside if statement
+    console.log(myVariable)
+}
+
+test()
+</code>
+        </pre>
+        <button id="run-code-2" class="run-code-button">Run Code</button>
+        <div id="output-2" class="output-container">
+            <code
+                id="output-text-2"
+                class="output-text language-javascript"
+            ></code>
+        </div>
+
+        <h4>const</h4>
+        <p>
+            <code class="language-javascript">const</code> is a constant NOT in
+            the value but in the assignment, meaning that it cannot be
+            reassigned and thus also HAS to be assigned
+        </p>
+        <pre>
+                        <code class="code-snippet language-javascript" id="code-snippet-3">
+// will give error and has to be initialized in const declaration
+const test; 
+</code>
+                    </pre>
+        <button id="run-code-3" class="run-code-button">Run Code</button>
+        <div id="output-3" class="output-container">
+            <code
+                id="output-text-3"
+                class="output-text language-javascript"
+            ></code>
+        </div>
+        <p>
+            We use <code class="language-javascript">const</code> whenever is
+            possible, else we fall to using
+            <code class="language-javascript">let</code>
+        </p>
     </div>
     <div class="documentation-item">
-        <h3>Variables</h3>
+        <h3>Scoping</h3>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+// global scope
+
+function someOtherScope(){
+    // function scope
+}
+
+{
+    // block scope
+}
+</code>
+        </pre>
+
+        <p>
+            Scope in JavaScript touch on the context in where variables get
+            declared and are accessible
+        </p>
+
+        <h4>Global Scope</h4>
+        <p>Accessible in all other scopes, functions and modules</p>
+        <h4>Function Scope</h4>
+        <p>
+            Only accessible inside the function in which the variable is
+            declared
+        </p>
+        <h4>Block Scope</h4>
+        <p>
+            Only accessible inside the block
+            <code class="language-javascript">{}</code>, can be an if-statement,
+            while or for loop to name some examples
+        </p>
     </div>
     <div class="documentation-item">
-        <h3>Variables</h3>
+        <h3>Loops</h3>
+        <p>
+            In modern JavaScript, we always default to using loop methods (<code
+                class="language-javascript"
+                >forEach, map, filter, sort, find, reduce</code
+            >)
+            <br />
+            <br />
+            ONLY use for loops when we need to do finger counting (ex. from
+            1-10)
+
+            <br />
+            <br />
+            With loop methods we get a clear intend on what we are achieving,
+            making the code easier to read and maintain. Loop methods are also a
+            lot more aesthetically pleasing than a traditional for loop
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-5">
+const numbers = [12, 15, 21, 24];
+
+for (let i = 0; i < numbers.length; i++) {
+    console.log(numbers[i]);
+}
+
+console.log('---------------');
+
+// ALOT simpler code with clear intend
+numbers.forEach(number => console.log(number));
+
+</code>
+        </pre>
+        <button id="run-code-5" class="run-code-button">Run Code</button>
+        <div id="output-5" class="output-container">
+            <code
+                id="output-text-5"
+                class="output-text language-javascript"
+            ></code>
+        </div>
+
+        <p>
+            With a traditional for loop we also risk mutating the original list,
+            if we are not making a new list and appending to that. With a map
+            method, we can assign it to a variable, so we always move forward
+            and not accessing lists that has already been manipulated
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-6">
+const numbers = [12, 15, 21, 24];
+
+for (index in numbers) {
+    numbers[index] = numbers[index] * 2;    
+}
+
+const doubledList = numbers.map(number => number * 2);
+
+console.log(numbers);
+console.log(doubledList);
+</code>
+        </pre>
+        <button id="run-code-6" class="run-code-button">Run Code</button>
+        <div id="output-6" class="output-container">
+            <code
+                id="output-text-6"
+                class="output-text language-javascript"
+            ></code>
+        </div>
     </div>
     <div class="documentation-item">
-        <h3>Variables</h3>
+        <h3>Functions</h3>
     </div>
     <div class="documentation-item">
-        <h3>Variables</h3>
+        <h3>Types</h3>
+        <p>Types in JavaScript:</p>
+        <ul>
+            <li><code class="language-javascript">Number</code></li>
+            <li><code class="language-javascript">String</code></li>
+            <li><code class="language-javascript">Boolean</code></li>
+            <li><code class="language-javascript">Object</code></li>
+            <li><code class="language-javascript">null</code></li>
+            <li><code class="language-javascript">undefined</code></li>
+            <li><code class="language-javascript">symbol</code></li>
+            <li><code class="language-javascript">bigint</code></li>
+        </ul>
+
+        <h4>Type Coercion</h4>
+        <p>
+            Type Coercion in JavaScript is when values automatically gets
+            converted to another datatype.
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-7">
+const value1 = "10";
+const value2 = 7;
+
+const sum = value1 + value2;
+
+console.log(sum);
+console.log(typeof(sum))
+</code>
+        </pre>
+        <button id="run-code-7" class="run-code-button">Run Code</button>
+        <div id="output-7" class="output-container">
+            <code
+                id="output-text-7"
+                class="output-text language-javascript"
+            ></code>
+        </div>
+        <p>
+            In the example above, the
+            <code class="language-javascript">value2</code> which is a number
+            automatically gets converted to a string, and thus being
+            concatenated in the sum variable, which is a string
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Variables</h3>
