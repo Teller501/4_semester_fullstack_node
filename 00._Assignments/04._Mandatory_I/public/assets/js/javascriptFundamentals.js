@@ -31,11 +31,17 @@ const outputDiv6 = document.getElementById("output-6");
 const outputText6 = document.getElementById("output-text-6");
 const runCodeButton6 = document.getElementById("run-code-6");
 
-const codeSnippet7 = document.getElementById("code-snippet-7");
-const code7 = codeSnippet7.textContent;
-const outputDiv7 = document.getElementById("output-7");
-const outputText7 = document.getElementById("output-text-7");
-const runCodeButton7 = document.getElementById("run-code-7");
+const codeSnippet11 = document.getElementById("code-snippet-11");
+const code11 = codeSnippet11.textContent;
+const outputDiv11 = document.getElementById("output-11");
+const outputText11 = document.getElementById("output-text-11");
+const runCodeButton11 = document.getElementById("run-code-11");
+
+const codeSnippet12 = document.getElementById("code-snippet-12");
+const code12 = codeSnippet12.textContent;
+const outputDiv12 = document.getElementById("output-12");
+const outputText12 = document.getElementById("output-text-12");
+const runCodeButton12 = document.getElementById("run-code-12");
 
 runCodeButton.addEventListener("click", () => {
     outputDiv.style.display = "block";
@@ -72,9 +78,16 @@ runCodeButton6.addEventListener("click", () => {
     typeEffect(executeCode(code6), outputText6);
 });
 
-runCodeButton7.addEventListener("click", () => {
-    outputDiv7.style.display = "block";
-    outputText7.textContent = "";
+runCodeButton11.addEventListener("click", () => {
+    outputDiv11.style.display = "block";
+    outputText11.textContent = "";
 
-    typeEffect(executeCode(code7), outputText7);
+    typeEffect(executeCode(code11), outputText11);
+});
+
+runCodeButton12.addEventListener("click", () => {
+    outputDiv12.style.display = "block";
+    outputText12.textContent = "";
+
+    typeEffect(executeCode(code12), outputText12);
 });

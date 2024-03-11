@@ -227,6 +227,68 @@ console.log(doubledList);
     </div>
     <div class="documentation-item">
         <h3>Functions</h3>
+        <h4>Standard Function</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-7">
+function getRandomInt(min,max) {
+    return Math.floor(Math.random() * (max + 1 - min) + min);
+}                
+</code>
+        </pre>
+        <p>
+            Standard function definition, with keyword function with a name, and
+            potential arguments in the parentheses
+
+            <br /><br />
+
+            Utilizes hoisting, so it can be called from anywhere in the code,
+            even before declaration, because all functions defined this way gets
+            put at the top of scope in JavaScript
+        </p>
+        <h4>Anonymous Function</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-8">
+const getRandomIntAnonymousFunction = function (min,max) {
+    return Math.floor(Math.random() * (max + 1 - min) + min);
+};                             
+</code>
+        </pre>
+        <h4>Arrow Function</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-9">
+const getRandomIntArrowFunction = (min, max) => {
+    return Math.floor(Math.random() * (max + 1 - min) + min);
+};          
+</code>
+        </pre>
+        <h4>One Line Arrow Function</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-10">
+const getRandomIntArrowFunctionOneLiner = 
+        (min, max) => Math.floor(Math.random() * (max + 1 - min) + min);
+</code>
+        </pre>
+        <h4>Callback Function</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-11">
+                                // string // callback function
+function genericActionPerformer(name, genericAction){
+    return genericAction(name);
+}                
+
+const running = (name) => `${name} is running`;
+const runningResult = genericActionPerformer("Alex", running)
+
+console.log(runningResult);            
+</code>
+        </pre>
+        <button id="run-code-11" class="run-code-button">Run Code</button>
+        <div id="output-11" class="output-container">
+            <code
+                id="output-text-11"
+                class="output-text language-javascript"
+            ></code>
+        </div>
     </div>
     <div class="documentation-item">
         <h3>Types</h3>
@@ -249,7 +311,7 @@ console.log(doubledList);
         </p>
 
         <pre>
-            <code class="code-snippet language-javascript" id="code-snippet-7">
+            <code class="code-snippet language-javascript" id="code-snippet-12">
 const value1 = "10";
 const value2 = 7;
 
@@ -259,8 +321,8 @@ console.log(sum);
 console.log(typeof(sum))
 </code>
         </pre>
-        <button id="run-code-7" class="run-code-button">Run Code</button>
-        <div id="output-7" class="output-container">
+        <button id="run-code-12" class="run-code-button">Run Code</button>
+        <div id="output-12" class="output-container">
             <code
                 id="output-text-7"
                 class="output-text language-javascript"
