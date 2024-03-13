@@ -253,6 +253,13 @@ const getRandomIntAnonymousFunction = function (min,max) {
 };                             
 </code>
         </pre>
+
+        <p>
+            An anonymous function is a function, that is missing a name. To call
+            an anonymous function later, we have to assign it to a variable.
+            Typically we use anonymous functions in other functions as
+            arguments.
+        </p>
         <h4>Arrow Function</h4>
         <pre>
             <code class="code-snippet language-javascript" id="code-snippet-9">
@@ -261,6 +268,12 @@ const getRandomIntArrowFunction = (min, max) => {
 };          
 </code>
         </pre>
+        <p>
+            An arrow function is a more concise way of writing a traditional
+            function. They don't have names, similar to anonymous functions. If
+            the function is a simple return statement, the arrow function don't
+            need {}, and can be written on one line, as shown below
+        </p>
         <h4>One Line Arrow Function</h4>
         <pre>
             <code class="code-snippet language-javascript" id="code-snippet-10">
@@ -268,6 +281,12 @@ const getRandomIntArrowFunctionOneLiner =
         (min, max) => Math.floor(Math.random() * (max + 1 - min) + min);
 </code>
         </pre>
+        <p>
+            Arrow Function can be written as 'One Liners', because they don't
+            need curly bracket {} if they are a simple return statement. One
+            Liners does not explicit need to be on one line, as it can be
+            complicated to read if they're long.
+        </p>
         <h4>Callback Function</h4>
         <pre>
             <code class="code-snippet language-javascript" id="code-snippet-11">
@@ -289,6 +308,14 @@ console.log(runningResult);
                 class="output-text language-javascript"
             ></code>
         </div>
+        <p>
+            Callback Functions are functions that are passed as argument to
+            another function. Functions in JavaScript are first class citizens,
+            meaning they can be passed as arguments, returned from other
+            functions etc. We typically use them in loop methods as arguments,
+            in forEach for example, we can use a callback method to manipulate
+            each array element.
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Types</h3>
