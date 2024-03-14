@@ -14,6 +14,16 @@ import {
     miscPage,
 } from "./util/readPages.js";
 
+// ============== API =====================
+
+app.get("/api/greeting", (req, res) => {
+    const providedName = req.query.name;
+
+    res.send({ data: `hello ${providedName}` });
+});
+
+// ============== HTML =====================
+
 app.get("/", (req, res) => {
     res.send(homepagePage);
 });

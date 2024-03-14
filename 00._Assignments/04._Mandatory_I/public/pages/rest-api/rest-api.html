@@ -1,2 +1,119 @@
 <h1>Rest API & Fetching</h1>
-<div id="container"></div>
+<div id="container">
+    <div class="documentation-item">
+        <h3>The Three REST Conventions</h3>
+        <h4>1. Using the right HTTP verb</h4>
+        <p>
+            When designing and creating a REST API, it is crucial to know about
+            the HTTP Verbs that are used to retrieve, create, edit and delete
+            data in your system.
+        </p>
+        <h4>2. Ordering</h4>
+        <ol>
+            <li>GET</li>
+            <li>POST</li>
+            <li>PUT</li>
+            <li>PATCH</li>
+            <li>DELETE</li>
+        </ol>
+        <p>
+            In the ordering it is also understanded that if you have multiple
+            GET on the same resource, that the first is always the one that
+            retrieves all resources, and then you can be specific on the ones to
+            search for ID for example.
+        </p>
+        <h4>3. Naming that maps to collections in your system</h4>
+        <p>
+            To correctly design and implement a REST API, it is important to use
+            nouns in plural that corresponds to your resources in your system.
+            In the example it is stated that even when retrieving a single
+            drink, we use '/drinks'. We always use plural form on nouns for
+            REST, this is to be explicit that we are working with collections.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>REST API Design example</h3>
+        <img
+            src="assets/images/REST_API_Design.png"
+            alt="a REST API design of ai models example"
+        />
+        <p>
+            In the example above is a designed REST API model, that expresses
+            the three REST conventions by using the correct HTTP verb, ordering
+            the methods correctly, and an appropriate naming. It can also be
+            noted that every endpoint is in plural, and indicates we are working
+            with a 'drinks' collection.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Fetching</h3>
+        <p>
+            Fetching is a way of accessing data from other webpages and API's,
+            and is typically used to retrieve data and displaying or
+            manipulating it. Fetch utilizes promises, which is a great way to
+            use asynchrounous programming in JavaScript. <br /><br />
+            <code class="language-javascript">fetch()</code> returns a promise
+            on the Response object, that can then be used in many different
+            ways. Typically it is used to retrieve JSON that then can be
+            unpacked and displayed or used.
+
+            <br /><br />
+
+            Here is an example of a fetch call on our own backend express
+            server:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-1">
+// backend
+app.get("/api/greeting", (req, res) => {
+    const providedName = req.query.name;
+
+    res.send({ data: `hello ${providedName}` });
+});
+
+
+// frontend
+const nameInput = document.getElementById("name-input");
+const greetingH2 = document.getElementById("greeting-text");
+const nameBtn = document.getElementById("name-btn");
+
+nameBtn.addEventListener("click", showGreeting);
+
+function showGreeting() {
+    const name = nameInput.value;
+    fetch(`/api/greeting?name=${name}`)
+        .then((response) => response.json())
+        .then((result) => {
+            greetingH2.textContent = result.data;
+        });
+}
+</code>
+        </pre>
+
+        <p>
+            In this example, we have a backend route '/api/greeting' where we
+            extract the query parameter 'name' then we send a response as JSON.
+            The response looks like this:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-json" id="code-snippet-1">
+{
+    "data": "hello anders"
+}                   
+</code>
+        </pre>
+        <p>
+            With this data, in the frontend we prompt the user for input, then
+            fetching on the endpoint with the specified name, and displaying it
+            to the user. Try it!
+        </p>
+        <input placeholder="Your name here" id="name-input" />
+        <button id="name-btn">Get Greeting</button>
+
+        <h2 id="greeting-text"></h2>
+    </div>
+</div>
+
+<script type="module" src="/assets/js/restAPI.js"></script>
