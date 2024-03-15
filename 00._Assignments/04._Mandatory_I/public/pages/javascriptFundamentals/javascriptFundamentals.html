@@ -351,7 +351,7 @@ console.log(typeof(sum))
         <button id="run-code-12" class="run-code-button">Run Code</button>
         <div id="output-12" class="output-container">
             <code
-                id="output-text-7"
+                id="output-text-12"
                 class="output-text language-javascript"
             ></code>
         </div>
@@ -361,6 +361,103 @@ console.log(typeof(sum))
             automatically gets converted to a string, and thus being
             concatenated in the sum variable, which is a string
         </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Asynchrounous Programming</h3>
+        <p>
+            Asynchrounous Programming lets you run tasks in parallel, so that
+            you don't need to wait for an input from a user or a network call to
+            an external API etc.
+
+            <br /><br />
+
+            The most common use cases for asynchrounous prorgramming is
+        </p>
+        <ul>
+            <li>Event handlers in browsers</li>
+            <li>Network Calls (fetch for example)</li>
+            <li>Buffers / Streams</li>
+            <li>Working with files / directories</li>
+            <li>
+                <code class="language-javascript">setTimeout()</code> /
+                <code class="language-javascript">setInterval()</code>
+            </li>
+            <li>Databases</li>
+        </ul>
+
+        <p>
+            There are 3 ways of achieving asynchrounous programming in
+            JavaScript:
+        </p>
+        <h4>Callbacks</h4>
+        <p>
+            The problem wtih callbacks is that we risk of sinking into the
+            callbck hell when making multiple nested callback functions.
+            <br /><br />
+            Consider this code:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-13">
+a(function(resA)){
+    b(resA, function(resB)){
+        c(resB, function(resC)){
+            d(resC, function(resD)){
+                // .... and so on
+            }
+        }
+    }
+}
+</code>
+        </pre>
+        <p>
+            The problem with this is that the code becomes a mess really
+            quickly, and is also called 'The Pyramid of Doom' <br /><br />
+            To fix this, JavaScript introduced Promises.
+        </p>
+        <h4>Promises</h4>
+        <p>
+            Promises was brought to JavaScript as an improvement over callbacks.
+            <br /><br />
+            A Promise can be in two states:
+        </p>
+        <ul>
+            <li>Pending</li>
+            <li>
+                Fulfilled
+                <ol>
+                    <li>Resolved</li>
+                    <li>Rejected</li>
+                </ol>
+            </li>
+        </ul>
+        <p>
+            When a Promise gets fulfilled, the function
+            <code class="language-javascript">.then()</code> can be called upon
+            the object, so you can do further things with the resolved value. If
+            a Promise gets rejected, the function
+            <code class="language-javascript">.catch()</code> will be called,
+            where you can do error handling.
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-14">
+new Promise((resolve, reject) => {
+    setTimeout(() => {
+        try {
+            throw new Error("some error");
+            resolve("Eveything OK");
+        } catch (error) {
+            reject("Nothing OK");
+        }
+    }, 2000);
+})
+.then((successMessage) => console.log(successMessage))
+.catch((errorMessage) => console.log(errorMessage));
+
+console.log("Im walking here...");
+</code>
+        </pre>
+        <h4>Async/Await</h4>
     </div>
 </div>
 
