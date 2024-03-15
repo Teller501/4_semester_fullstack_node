@@ -4,53 +4,11 @@ const app = express();
 
 app.use(express.static("public"));
 
-import {
-    homepagePage,
-    javascriptFundamentalsPage,
-    nodeFundamentalsPage,
-    expressPage,
-    restAPIPage,
-    urlAnatomyPage,
-    miscPage,
-} from "./util/readPages.js";
+import pagesRouter from "./routers/pagesRouter.js";
+app.use(pagesRouter);
 
-// ============== API =====================
-
-app.get("/api/greeting", (req, res) => {
-    const providedName = req.query.name;
-
-    res.send({ data: `hello ${providedName}` });
-});
-
-// ============== HTML =====================
-
-app.get("/", (req, res) => {
-    res.send(homepagePage);
-});
-
-app.get("/javascript-fundamentals", (req, res) => {
-    res.send(javascriptFundamentalsPage);
-});
-
-app.get("/nodejs-fundamentals", (req, res) => {
-    res.send(nodeFundamentalsPage);
-});
-
-app.get("/express", (req, res) => {
-    res.send(expressPage);
-});
-
-app.get("/rest-api", (req, res) => {
-    res.send(restAPIPage);
-});
-
-app.get("/url-anatomy", (req, res) => {
-    res.send(urlAnatomyPage);
-});
-
-app.get("/misc", (req, res) => {
-    res.send(miscPage);
-});
+import greetingRouter from "./routers/greetingRouter.js";
+app.use(greetingRouter);
 
 const PORT = 8080;
 app.listen(PORT, () => console.log("Server is running on port", PORT));
