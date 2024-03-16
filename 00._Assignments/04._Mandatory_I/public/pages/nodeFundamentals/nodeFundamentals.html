@@ -12,6 +12,26 @@
 node -app_name-                 
 </code>
         </pre>
+
+        <p>To install an external module, run one of the following command:</p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-1">
+npm install 'module_name'       
+npm i 'module_name'        
+</code>
+        </pre>
+
+        <p>
+            You can also manually get them by naming them in the dependencies
+            object in the package.json
+        </p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-1">
+"dependencies": {
+    "express": "^4.18.3"
+}       
+</code>
+        </pre>
     </div>
     <div class="documentation-item">
         <h3>package.json</h3>
@@ -108,9 +128,37 @@ node -app_name-
     </div>
     <div class="documentation-item">
         <h3>node_modules</h3>
+        <p>
+            The node_modules folder is a storage folder for all the external
+            modules that your project has installed / depends on. Whenever you
+            run <code class="language-javascript">npm install</code>, the module
+            gets downloaded from the
+            <a href="https://www.npmjs.com/">npmjs.com</a> website and placed in
+            the node_modules folder.
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Nodemon</h3>
+        <p>
+            Nodemon is a great tool for developers, because it automatically
+            restarts the server whenever a change has been made.
+            <br /><br />
+            When in same directory as your app.js or entry point, run the
+            following command:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-1">
+nodemon 'your_app'       
+</code>
+        </pre>
+        <p>
+            This will initially do the same as
+            <code class="code-snippet language-bash" id="code-snippet-1"
+                >node 'your_app'</code
+            >, but it listens for changes, so it runs that command every time a
+            change has been made to the default extensions (js,mjs,cjs,json)
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Import/Export</h3>
