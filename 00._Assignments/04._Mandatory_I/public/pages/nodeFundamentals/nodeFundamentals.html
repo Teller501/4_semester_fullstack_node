@@ -1,2 +1,121 @@
 <h1>Node.JS Fundamentals</h1>
-<div id="container"></div>
+<p>
+    Node.JS is a JavaScript runtime environment, that is used to make it
+    convenient for having JavaScript in both Frontend and Backend.
+</p>
+<div id="container">
+    <div class="documentation-item">
+        <h3>Basics</h3>
+        <p>To run files with Node, we use the following command:</p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-1">
+node -app_name-                 
+</code>
+        </pre>
+    </div>
+    <div class="documentation-item">
+        <h3>package.json</h3>
+        <p>
+            The package.json file is a crucial file when working with Node.js.
+            The file is used to store information on the application,
+            dependencies, scripts and more. In Node.js the most common package
+            managers are npm & yarn.
+        </p>
+        <pre>
+            <code class="code-snippet language-json" id="code-snippet-2">
+{
+    "name": "teller_mandatory_i",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "the first mandatory assignment for the fullstack node js course on KEA (2024)",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Teller501/4_semester_fullstack_node.git"
+    },
+    "keywords": [
+        "node",
+        "documentation",
+        "code",
+        "express"
+    ],
+    "author": "Anders Teller",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Teller501/4_semester_fullstack_node/issues"
+    },
+    "homepage": "https://github.com/Teller501/4_semester_fullstack_node#readme",
+    "dependencies": {
+        "express": "^4.18.3"
+    }
+}                                
+</code>
+        </pre>
+        <p>
+            This is the package.json for this project. It contains a lot of meta
+            data and a dependency, which is express. Here is a further
+            explanation of all the key/value pairs:
+        </p>
+        <ol>
+            <li><b>"name":</b> the name of the module of the package.json.</li>
+            <li>
+                <b>"version":</b> the current version of the module, typically
+                following semantic versioning.
+            </li>
+            <li>
+                <b>type:</b> describe the module format this project uses.
+                "module" allows the use of ECMAScript files.
+            </li>
+            <li>
+                <b>"description":</b> description of the module, describing more
+                than the name can.
+            </li>
+            <li>
+                <b>"main":</b> the directory of the entry point to the module.
+            </li>
+            <li>
+                <b>"scripts":</b> can contain many scripts, where the key is the
+                name of the script and the value is the custom bash script.
+            </li>
+            <li>
+                <b>"repository":</b> describes what type of version control the
+                module uses, and where the source code can be located.
+            </li>
+            <li>
+                <b>"keywords":</b> collection of keywords that help describe the
+                module and for searching purposes.
+            </li>
+            <li><b>"author":</b> the author of the module.</li>
+            <li>"license": describes what license this module uses.</li>
+            <li>
+                <b>"bugs":</b> object that describes where you can report bugs
+                for the project.
+            </li>
+            <li>
+                <b>"homepage":</b>
+                a link to the project homepage. In this case, the link points to
+                the repository readme file.
+            </li>
+            <li>
+                <b>"dependencies":</b> is used to describe what other modules
+                this module uses. The key is the name of module, and the value
+                is the version.
+            </li>
+        </ol>
+    </div>
+    <div class="documentation-item">
+        <h3>node_modules</h3>
+    </div>
+    <div class="documentation-item">
+        <h3>Nodemon</h3>
+    </div>
+    <div class="documentation-item">
+        <h3>Import/Export</h3>
+    </div>
+    <div class="documentation-item">
+        <h3>Scripts</h3>
+    </div>
+</div>
