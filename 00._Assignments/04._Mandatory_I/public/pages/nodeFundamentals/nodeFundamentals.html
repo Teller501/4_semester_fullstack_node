@@ -157,8 +157,22 @@ nodemon 'your_app'
             <code class="code-snippet language-bash" id="code-snippet-1"
                 >node 'your_app'</code
             >, but it listens for changes, so it runs that command every time a
-            change has been made to the default extensions (js,mjs,cjs,json)
+            change has been made to the default extensions (js,mjs,cjs,json).
+
+            <br /><br />
+            To set your own extenison, you can either run command
+            <code class="code-snippet language-bash" id="code-snippet-1"
+                >nodemon --ext js,html,json</code
+            >, or you can create a 'nodemon.json' file with the following:
         </p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-1">
+{
+    "ext": "html,js,json,css"
+}                      
+</code>
+        </pre>
+        <p>This way you do not have to write it everytime you launch the app</p>
     </div>
     <div class="documentation-item">
         <h3>Import/Export</h3>
