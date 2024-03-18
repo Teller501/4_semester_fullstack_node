@@ -1,2 +1,69 @@
 <h1>URL Anatomy</h1>
-<div id="container"></div>
+<img src="assets/images/url-anatomy.png" />
+<div id="container">
+    <div class="documentation-item">
+        <h3>Protocol</h3>
+        <p>
+            Specifies what protocol that's being used to access this resource.
+            There are different protocols for different purposes:
+        </p>
+        <ul>
+            <li>
+                <b>HTTP:</b> Hyper Text Transfer Protocol, how web browsers and
+                servers communicate.
+            </li>
+            <li><b>HTTPS:</b> Secure HTTP, connection with encryption.</li>
+            <li>
+                <b>FTP:</b> File Transfer Protocol, transfers files between
+                computers on network.
+            </li>
+            <li>
+                <b>TCP/IP:</b> Transmission Control Protocol / Internet Protocol
+                address, foundation of the internet - reliable data delivery.
+            </li>
+            <li>
+                <b>DNS:</b> Domain Name System, translates domain names into ip
+                adresses.
+            </li>
+        </ul>
+    </div>
+    <div class="documentation-item">
+        <h3>Domain</h3>
+        <p>Points to a location on the internet where this resource is.</p>
+        <h3>Sub-domain</h3>
+        <p>Prefix for seperating different parts of a website</p>
+        <h3>Top-level Domain</h3>
+        <p>
+            A URL suffix, that indicates what type of webiste it is ('.com' for
+            commercial, '.net' for network, '.gov' for government etc.).
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Endpoint</h3>
+        <p>
+            Endpoints are defined by an API and refer to a specific
+            functionality. In REST API, the endpoints are nouns in plural used
+            to access information of a specific collection, such as '/users' or
+            '/drinks'
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Path</h3>
+        <p>The path to the resouce on the specific domain.</p>
+    </div>
+    <div class="documentation-item">
+        <h3>Query String / Parameters</h3>
+        <p>
+            The Query String starts with a '?' followed by one or more query
+            parameters, which are key value pairs. If more than one parameter,
+            they are seperated by a '&'.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Path Variables</h3>
+        <p>
+            Path Variables are part of the path itself, and are a dynamic piece
+            of the path.
+        </p>
+    </div>
+</div>
