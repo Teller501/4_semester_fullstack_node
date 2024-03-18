@@ -15,7 +15,7 @@ node -app_name-
 
         <p>To install an external module, run one of the following command:</p>
         <pre>
-            <code class="code-snippet language-bash" id="code-snippet-1">
+            <code class="code-snippet language-bash" id="code-snippet-2">
 npm install 'module_name'       
 npm i 'module_name'        
 </code>
@@ -26,7 +26,7 @@ npm i 'module_name'
             object in the package.json
         </p>
         <pre>
-            <code class="code-snippet language-bash" id="code-snippet-1">
+            <code class="code-snippet language-bash" id="code-snippet-3">
 "dependencies": {
     "express": "^4.18.3"
 }       
@@ -42,7 +42,7 @@ npm i 'module_name'
             managers are npm & yarn.
         </p>
         <pre>
-            <code class="code-snippet language-json" id="code-snippet-2">
+            <code class="code-snippet language-json" id="code-snippet-4">
 {
     "name": "teller_mandatory_i",
     "version": "0.0.1",
@@ -148,36 +148,113 @@ npm i 'module_name'
         </p>
 
         <pre>
-            <code class="code-snippet language-bash" id="code-snippet-1">
+            <code class="code-snippet language-bash" id="code-snippet-5">
 nodemon 'your_app'       
 </code>
         </pre>
         <p>
             This will initially do the same as
-            <code class="code-snippet language-bash" id="code-snippet-1"
+            <code class="code-snippet language-bash" id="code-snippet-6"
                 >node 'your_app'</code
             >, but it listens for changes, so it runs that command every time a
             change has been made to the default extensions (js,mjs,cjs,json).
 
             <br /><br />
             To set your own extenison, you can either run command
-            <code class="code-snippet language-bash" id="code-snippet-1"
+            <code class="code-snippet language-bash" id="code-snippet-7"
                 >nodemon --ext js,html,json</code
             >, or you can create a 'nodemon.json' file with the following:
         </p>
         <pre>
-            <code class="code-snippet language-bash" id="code-snippet-1">
+            <code class="code-snippet language-bash" id="code-snippet-8">
 {
     "ext": "html,js,json,css"
 }                      
 </code>
         </pre>
-        <p>This way you do not have to write it everytime you launch the app</p>
+        <p>
+            This way you do not have to write the extensions everytime you
+            launch the app.
+
+            <br /><br />
+            Note: This tool is only intended for development environments, and
+            shouldn't be used in production.
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Import/Export</h3>
+        <p>
+            When working with external modules in Node, you can either use
+            CommonJS and ECMAScript modules. <br /><br />
+            CommonJS modules are the traditional way of packing JavaScript code
+            for Node. CommonJS modules load synchronously.
+            <br />
+            ECMAScript modules are the standard way making modules for Node.JS
+            now. They load asynchronously, and have several perfomance benefits.
+            <br /><br />
+            There is a difference in the way of importing/exporting them:
+        </p>
+        <h4>CommonJS</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-9">
+// Importing
+const express = require("express");             
+
+// Exporting
+module.exports = myFunction;
+
+module.exports = {
+    myFunction,
+    myVariable
+  };
+</code>
+        </pre>
+        <h4>ECMAScript</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-10">
+// Importing
+import { Router } from "express";
+
+const router = Router();
+
+// Exporting
+export default router;
+</code>
+        </pre>
+        <p>
+            To use ECMAScript modules in your project, you can specify the
+            "type" in package.json with the value "module": <br />
+            <code class="code-snippet language-json" id="code-snippet-11">
+                "type": "module"
+            </code>
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Scripts</h3>
+        <p>
+            In 'package.json' you can define custom bash commands for your
+            project in the "scripts" object:
+        </p>
+        <pre>
+            <code class="code-snippet language-json" id="code-snippet-12">
+"scripts": {
+    "tester": "pwd"
+}
+</code>
+        </pre>
+        <p>
+            To run the script, you simply type
+            <code class="code-snippet language-json" id="code-snippet-13"
+                >npm run tester</code
+            >
+            in the terminal, and for this script you will get the output:
+        </p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-12">
+pwd
+
+/Users/andersteller/Library/CloudStorage/OneDrive-KøbenhavnsErhvervsakademi/4_semester_node/4_semester_fullstack_node/00._Assignments/04._Mandatory_I
+</code>
+        </pre>
     </div>
 </div>

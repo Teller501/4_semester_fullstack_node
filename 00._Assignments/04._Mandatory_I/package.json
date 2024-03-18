@@ -5,7 +5,8 @@
     "description": "the first mandatory assignment for the fullstack node js course on KEA (2024)",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "tester": "pwd"
     },
     "repository": {
         "type": "git",
