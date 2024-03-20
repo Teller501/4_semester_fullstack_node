@@ -26,4 +26,202 @@ git push
             >https://github.com/Teller501/4_semester_fullstack_node</a
         >
     </div>
+    <div class="documentation-item">
+        <h3>Frontend Structure</h3>
+        <p>
+            The structure of the frontend is important, because it enhances the
+            maintainability, scalability and perfomance of your project. In this
+            project, we seperate the public files from the backend, and the
+            frontend is structured in a way that makes it easy to navigate and
+            understand. The frontend is structured in the following way:
+        </p>
+        <pre>
+            <code class="code-snippet language-bash" id="code-snippet-11">
+public
+├── assets
+│   ├── css
+│   │   ├── homepage.css
+│   │   └── main.css
+│   ├── fonts
+│   │   └── CrayonLibre-vm6r9.ttf
+│   ├── images
+│   │   ├── REST_API_Design.png
+│   │   ├── homepage_background.jpg
+│   │   ├── node-logo.png
+│   │   └── url-anatomy.png
+│   └── js
+│       ├── footer.js
+│       ├── javascriptFundamentals.js
+│       └── restAPI.js
+├── components
+│   ├── footer
+│   │   └── footer.html
+│   └── header
+│       └── header.html
+├── pages
+│   ├── express
+│   │   └── express.html
+│   ├── homepage
+│   │   └── homepage.html
+│   ├── javascriptFundamentals
+│   │   └── javascriptFundamentals.html
+│   ├── misc
+│   │   └── misc.html
+│   ├── nodeFundamentals
+│   │   └── nodeFundamentals.html
+│   ├── rest-api
+│   │   └── rest-api.html
+│   └── url-anatomy
+│       └── url-anatomy.html
+└── util
+    ├── codeExecutor.js
+    └── typeEffect.js 
+</code>
+        </pre>
+        <p>
+            In the public directory, we have 4 subdirectories (assets,
+            components, pages and util).
+            <br /><br />
+            The assets directory contains all the static files, such as css,
+            fonts, images and js files.
+            <br /><br />
+            The components directory contains all the reusable components, such
+            as the header and footer.
+            <br /><br />
+            The pages directory contains all the pages of the website, such as
+            the homepage, express, javascriptFundamentals, misc,
+            nodeFundamentals etc...
+            <br /><br />
+            The util directory contains all the utility files, such as the
+            codeExecutor and typeEffect. These files are used to execute code
+            and create a typewriter effect. Having the utility files in a
+            sperate directory makes it easy to use accross multiple pages and
+            scripts.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Redirection approaches</h3>
+        <h4>Server Side Redirection</h4>
+        <p>
+            Server Side Redirections is when the server responds with a HTTP
+            code and a header for 'Location' with the url to redirect to.
+        </p>
+        <h4>Client Side Redirection</h4>
+        <p>
+            In one of the ways with Client Side Redirection is that JavaScript
+            handles it, with the
+            <code class="language-javascript">window.location.href</code>
+            assignment, dynamically redirecting the user.
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-11">
+setTimeout(() => (window.location.href = "/publicsquare"), 3000);       
+</code>
+        </pre>
+        <p>
+            In the example above, we set a timeout for 3 seconds from when the
+            page with the script is loaded, to then redirect to '/publicsquare'
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Client Side Renderig (CSR) vs Server Side Rendering (SSR)</h3>
+        <p>
+            Client Side Rendering is when a client request a site and the code
+            is sent to the client and then processed and turned into the page we
+            view.
+            <br /><br />
+
+            Server Side Rendering is when a client request a site and the server
+            processes the code and sends the page to the client.
+            <br /><br />
+            The difference between the two is that with CSR, the client has to
+            wait for the code to be processed, but with SSR, the client gets the
+            page instantly.
+
+            <br /><br />
+            There are several arguments for and against both:
+        </p>
+        <h4>Load Time</h4>
+        <p>
+            <b>SSR</b> <br />
+            Loads the page faster, as the server sends the full page. However,
+            it can be slower if the server is slow.
+        </p>
+        <p>
+            <b>CSR</b> <br />
+            Page loads slower, as the client has to process the code. However,
+            afterwards the page is faster at navigating, because the client only
+            has to request the data, not the whole page.
+        </p>
+        <h4>Resources Spent</h4>
+        <p>
+            <b>SSR</b> <br />
+            The server handles the processing, so the client doesn't have to,
+            especially if the clients device is slow. However, the server has to
+            be powerful to handle the processing.
+        </p>
+        <p>
+            <b>CSR</b> <br />
+            Releases the server of the load of processing the code, but is not
+            ideal for slower networks or devices.
+        </p>
+        <h4>SEO</h4>
+        <p>
+            <b>SSR</b> <br />
+            Far better for SEO as webcrawlers can read the whole content of the
+            page. It requires resources to render the page for web crawlers and
+            bots.
+        </p>
+        <p>
+            <b>CSR</b> <br />
+            Better dynamic content, but not as good for SEO, because it is hard
+            for webcrawlers to read the content.
+        </p>
+        <h4>CORS</h4>
+        <p>
+            <b>SSR</b><br />
+            CORS is administered by the browser, so they do not involve browsers
+            with server to server communication. This means that CORS is not a
+            problem with SSR.
+        </p>
+        <p>
+            <b>CSR</b><br />
+            Has to deal with CORS, like setting headers or configuring the
+            backend for allowing CORS.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Code Placement and Application Performance</h3>
+        <p>
+            When declaring and initilazing variables in the global scope, it is
+            available throughout all of your project, which will cause higher
+            memory usage.
+            <br />
+            Using the local scope will make the code a lot more readable and
+            organizable, and the memory usage will be lower.
+            <br /><br />
+            Another topic is lazy loading, that is when you only load the
+            modules and scripts when you need them. This will make the initial
+            page load faster.
+            <br /><br />
+            A thing to always consider is the size of your modules/scripts. If a
+            script is too big, consider splitting it to another file.
+            <br /><br />
+            Asynchronous programming can also increase perfomance of your
+            application, as you don't block the main thread.
+        </p>
+    </div>
+    <div class="documentation-item">
+        <h3>Importance of Clean Code</h3>
+        <p>
+            Clean code is essential, especially when working with others, there
+            has to be some kind of standard in how you write your code.
+            <br /><br />
+            Code should be written with readability in mind, so that others (and
+            most importantly yourself!) can read and understand it. <br /><br />
+            It should also be kept simple, so the application doesn't get
+            unnessesarily complex. So chose the most simple way of achieving the
+            desired goal, and avoid overengineering.
+        </p>
+    </div>
 </div>
