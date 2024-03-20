@@ -20,7 +20,8 @@
             In the ordering it is also understanded that if you have multiple
             GET on the same resource, that the first is always the one that
             retrieves all resources, and then you can be specific on the ones to
-            search for ID for example.
+            search for ID for example. The same goes for the other methods, the
+            first is always the general one, and the latter are more specific.
         </p>
         <h4>3. Naming that maps to collections in your system</h4>
         <p>
@@ -51,7 +52,10 @@
             Fetching is a way of accessing data from other webpages and API's,
             and is typically used to retrieve data and displaying or
             manipulating it. Fetch utilizes promises, which is a great way to
-            use asynchrounous programming in JavaScript. <br /><br />
+            use asynchrounous programming in JavaScript. Fetch is a modern
+            replacement for XMLHttpRequest, and is much more powerful and
+            flexible.
+            <br /><br />
             <code class="language-javascript">fetch()</code> returns a promise
             on the Response object, that can then be used in many different
             ways. Typically it is used to retrieve JSON that then can be

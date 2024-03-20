@@ -132,11 +132,13 @@ setTimeout(() => (window.location.href = "/publicsquare"), 3000);
             <br /><br />
 
             Server Side Rendering is when a client request a site and the server
-            processes the code and sends the page to the client.
+            processes the code and sends the page to the client. The client then
+            gets the page instantly.
             <br /><br />
             The difference between the two is that with CSR, the client has to
             wait for the code to be processed, but with SSR, the client gets the
-            page instantly.
+            page instantly. However with CSR, the client only has to request the
+            data, not the whole page, which makes the page faster at navigating.
 
             <br /><br />
             There are several arguments for and against both:
@@ -202,7 +204,9 @@ setTimeout(() => (window.location.href = "/publicsquare"), 3000);
             <br /><br />
             Another topic is lazy loading, that is when you only load the
             modules and scripts when you need them. This will make the initial
-            page load faster.
+            page load faster. This is especially useful when you have a lot of
+            modules and scripts, and you don't need all of them at the same
+            time.
             <br /><br />
             A thing to always consider is the size of your modules/scripts. If a
             script is too big, consider splitting it to another file.
@@ -221,7 +225,9 @@ setTimeout(() => (window.location.href = "/publicsquare"), 3000);
             most importantly yourself!) can read and understand it. <br /><br />
             It should also be kept simple, so the application doesn't get
             unnessesarily complex. So chose the most simple way of achieving the
-            desired goal, and avoid overengineering.
+            desired goal, and avoid overengineering. <br /><br />
+            It should also be well organized, so that it is easy to navigate and
+            understand. <br /><br />
         </p>
     </div>
 </div>
