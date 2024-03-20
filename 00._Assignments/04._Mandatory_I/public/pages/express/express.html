@@ -1,11 +1,82 @@
-<h1>Express Framework</h1>
-<p>
-    Node.JS is a JavaScript runtime environment, that is used to make it
-    convenient for having JavaScript in both Frontend and Backend.
+<h1 class="documentation-header">Express Framework</h1>
+<p class="documentation-header">
+    Express is a web framework for Node.JS, that is designed to be minimal and
+    flexible.
 </p>
 <div id="container">
     <div class="documentation-item">
         <h3>Server Instance with Express</h3>
+        <p>
+            To create a server instance with Express, we first have to install
+            express to our project with the following command: <br />
+            <br />
+            <code class="code-snippet language-javascript" id="code-snippet-1"
+                >npm i express</code
+            >
+            <br /><br />
+            Next, we will have to import it into our app.js (the entry point to
+            your app). We can do this in 2 ways, depending on if we are using
+            CommonJS or ECMAScript modules:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-2">
+// CommonJS
+const express = require("express");
+const app = express();
+
+// ECMAScript
+import express from "express";
+const app = express();
+</code>
+        </pre>
+
+        <p>
+            In both of the instances, we are first importing express, and then
+            we are instantiating it to a variable called 'app'
+            <br /><br />
+            Then we have to define what port our app should listen to, for HTTP
+            dev we use 8080:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-3">
+const PORT = 8080;
+app.listen(PORT, () => console.log("Server is running on port", PORT));
+</code>
+        </pre>
+        <p>
+            In this example, we are using a callback function that triggers on
+            start and will tell us what port the server is running on.
+
+            <br /><br />
+
+            To start with, we can define a simple route on root to see if it
+            works:
+        </p>
+
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+app.get("/", (req, res) => {
+    res.send({ data: "Welcome" });
+});
+</code>
+        </pre>
+        <p>
+            Here we use the instance variable of Express 'app' to define a GET
+            route with the endpoint '/'. In a callback function we are setting
+            the parameters 'req, res' that stands for 'request' and 'response'.
+            The request is where we can access input from users, for example the
+            body they send with the request or query parameters. In this simple
+            route we are sending a response in the form of JSON, as Express
+            knows to send it as JSON when we send a JavaScript Object. <br />
+            <br />
+            When navigating to 'http://localhost:8080' we get the following
+            response: <br /><br />
+            <code class="code-snippet language-json" id="code-snippet-5">
+                { "data": "Welcome" }
+            </code>
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Requests</h3>
