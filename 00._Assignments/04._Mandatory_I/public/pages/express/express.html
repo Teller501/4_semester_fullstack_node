@@ -80,14 +80,249 @@ app.get("/", (req, res) => {
     </div>
     <div class="documentation-item">
         <h3>Requests</h3>
+        <p>
+            In Express we can send all requests (GET POST PUT/PATCH DELETE).
+            Lets start with a GET Request, that is used to request data from a
+            resource or collection.
+        </p>
+        <h4>GET Request</h4>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+// route
+         // endpoint
+app.get("/saySomethingNiceAboutMe/:greeting", (req,res) => {
+    console.log(req.params.greeting);
+    console.log(req.query);
+
+    if (req.query.handsome !== "very"){
+        return res.send({ data: "ain't no thang" })
+    }
+
+    return res.send({ data: 'thanks cool cat' })
+});
+</code>
+        </pre>
+        <p>
+            In this example we define a get route with the
+            <code class="language-javascript">app.get()</code> method, with the
+            endpoint '/saySomethingNiceAboutMe' that also has a path variable
+            '/:greeting'. In the method, we are logging the path variable and
+            the query parameters that gets sent for debugging purposes.
+            <br /><br />
+            In the if statement, we check if the query parameter 'handsome' is
+            set to 'very', and if it is not, we send a response with the data
+            'ain't no thang', if not, we send 'thanks cool cat'.
+        </p>
+        <h4>POST Request</h4>
+        <p>
+            We use POST requests to send data to the server to create a new
+            resource to the collection. When sending a POST request, the data is
+            sent through the body of the request.
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+const movies = [
+{ id: 1, name: 'Interstellar', director: 'Christopher Nolan'},
+{ id: 2, name: 'High And Low', director: 'Akira Kurosawa' },
+{ id: 3, name: 'Clockwork Orange', type: 'Stanley Kubrick' },
+];
+
+let currentId = 3;
+
+// route
+         // endpoint
+app.post("/movie", (req, res) => {
+    const newMovie = req.body;
+    newMovie.id = ++currentId;
+    drinks.push(newDrink);
+
+    res.send({ data: newDrink })
+});
+</code>
+        </pre>
+        <p>
+            Here we define a route with the
+            <code class="language-javascript">app.post()</code> where we then
+            get the new movie from the request body and assign it to the
+            variable 'newMovie'. In this case we are not using a database, so we
+            manually increment the id and push the new movie to the movies
+            array. We then send the new movie as a response.
+        </p>
+        <h4>PUT/PATCH Request</h4>
+        <p>
+            PUT/PATCH is used to modify an existing resource. PUT is updating
+            the whole resource, and can create a new if it doesn't exist. PATCH
+            is only sending the data that needs to be updated.
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+app.patch("/drinks/:id", (req, res) => {
+    const providedDrinkId = Number(req.params.id);
+    const foundDrinkIndex = drinks.findIndex((drink) => drink.id === providedDrinkId);
+
+    if (foundDrinkIndex === -1){
+        res.status(404).send({ error: "drink not found by id", providedDrinkId })
+    } else {
+        const originalDrink = drinks[foundDrinkIndex];
+        const drinkToUpdate = { ...originalDrink, ...req.body, id: providedDrinkId };
+        drinks[foundDrinkIndex] = drinkToUpdate
+        res.send({ data: drinkToUpdate });
+    }
+});
+</code>
+        </pre>
+        <p>
+            Here is an example of a PATCH request, using the method
+            <code class="language-javascript">app.patch()</code>. We are using a
+            path variable to get the id of the drink we want to update. We then
+            find the index of the drink in the drinks array, and if it is not
+            found, we send a 404 status with an error message. If it is found,
+            we update the drink with the new data from the request body, and
+            send the updated drink as a response.
+        </p>
+
+        <h4>DELETE Request</h4>
+        <p>A DELETE requests is used to delete a resource from a collection.</p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+app.delete("/drinks/:id", (req, res) => {
+    const providedDrinkId = Number(req.params.id);
+    const foundDrinkIndex = drinks.findIndex((drink) => drink.id === providedDrinkId);
+
+    if (foundDrinkIndex === -1){
+        res.status(404).send({ error: "drink not found by id", providedDrinkId })
+    } else {
+        drinks.splice(foundDrinkIndex, 1);
+        res.send({ data: providedDrinkId });
+    }
+
+    res.send({ })
+});
+</code>
+        </pre>
+        <p>
+            We use the function
+            <code class="language-javascript">app.delete()</code> with the path
+            variable 'id' to specify what id is to be deleted. We store the id
+            in 'providedDrinkId' and then find the index of the drink in the
+            drinks array. If it is not found, we send a 404 status with an error
+            message. If it is found, we use the splice method to remove the
+            drink from the array and send the id as a response.
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Body Parsing</h3>
+        <p>
+            When sending a request to a server, the client can include a body
+            wtih diffent types of data. It can vary what the data is, from form
+            inputs to clients uploading photos, but we need to parse it so that
+            our server can understand it. <br /><br />
+            To use the bodyparser for express, we no longer have to, like in
+            older versions, import the body-parser module, as it is now included
+            in express. To use it we simply type:
+            <br />
+            <br />
+            <code class="code-snippet language-javascript" id="code-snippet-5"
+                >app.use(express.json());</code
+            >
+            <br /><br />
+            Here is an example of how it is used in a POST route:
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+app.post("/drinks", (req, res) => {
+    const newDrink = req.body;
+    newDrink.id = ++currentId;
+    drinks.push(newDrink);
+
+    res.send({ data: newDrink })
+});
+</code>
+        </pre>
+        <p>
+            In the example we access the Request body that has been parsed by
+            the body-parser, and can now be accessed from the
+            <code class="language-javascript">req.body</code> and be manipulated
+            or stored in a database for example. In this case we operate without
+            a database, so we jsut push the new drink to a drinks array and sent
+            it as a response.
+        </p>
     </div>
     <div class="documentation-item">
         <h3>Static Files</h3>
+        <p>
+            Express provides a way of serving static files using the
+            <code class="language-javascript">express.static</code> function.
+            <br /><br />
+            <code class="language-javascript"
+                >app.use(express.static("public"));</code
+            >
+            <br /><br />
+            Here, we are serving static files from the public directory. That
+            way, we can locate our static files form the
+            'localhost:8080/path/to/file', as Express will look for the file in
+            the public directory.
+
+            <br /><br />
+            This helps us limit the public files to a specfic directory, and not
+            make the whole project accessible to the public.
+
+            <br /><br />
+            To serve a html page, we can do the following:
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/homepage/homepage.html");
+});                
+</code>
+        </pre>
     </div>
     <div class="documentation-item">
         <h3>Router</h3>
+        <p>
+            When working with routes in Express, it can very quickly be messy,
+            if all the routes are defined in the entry point of your
+            application. That is where Router from the Express library come in.
+            Here, we can define routes in separate files and then import them
+            into our app.js. <br /><br />
+
+            First, we create a new file, import and initialize the router:
+        </p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+import { Router } from "express";
+
+const router = Router();              
+</code>
+        </pre>
+        <p>Next, we define our desired routes:</p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+router.get("/api/greeting", (req, res) => {
+    const providedName = req.query.name;
+
+    res.send({ data: `hello ${providedName}` });
+});           
+</code>
+        </pre>
+        <p>Then we export the router, so that we can import it in the app.js</p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+export default router;  
+</code>
+        </pre>
+        <p>At last in our app.js we import the router and use it:</p>
+        <pre>
+            <code class="code-snippet language-javascript" id="code-snippet-4">
+import greetingRouter from "./routers/greetingRouter.js";
+app.use(greetingRouter);                
+</code>
+        </pre>
+        <p>
+            This makes our app.js a lot cleaner, and we can seperate the routes
+            for differen business domains, such as /drinks, /users, and for our
+            HTML server.
+        </p>
     </div>
 </div>
