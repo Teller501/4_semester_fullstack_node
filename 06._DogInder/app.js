@@ -10,5 +10,8 @@ app.use(matchesRouter);
 import pagesRouter from "./routers/pagesRouter.js";
 app.use(pagesRouter);
 
-const PORT = 8080;
-app.listen(PORT, () => console.log("Server is running on port", PORT));
+
+const PORT = process.env.PORT ?? 8080;
+const server = app.listen(PORT, () =>
+    console.log("Server is running on port", server.address().port)
+);
