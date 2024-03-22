@@ -1,1 +1,36 @@
 <h1>Ask the dog of wisdom!</h1>
+
+<div id="contact-form">
+    <form action="/api/contact" method="POST" class="form-element">
+        <div class="form-element">
+            <label for="name">Name </label>
+            <input id="name" name="name" placeholder="Your Name" required />
+        </div>
+
+        <div class="form-element">
+            <label for="email">Email </label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Your Email Address"
+                required
+            />
+        </div>
+
+        <div class="form-element">
+            <label for="message">Message</label>
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Write your message"
+                cols="75"
+                rows="10"
+            ></textarea>
+        </div>
+
+        <div class="form-element">
+            <button aria-label="Submit Form">Submit</button>
+        </div>
+    </form>
+</div>
