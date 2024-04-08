@@ -4,6 +4,7 @@
     export let onTakeItem;
 
     import { fridgeMessages } from "../../stores/fridgeMessageStore.js";
+    import toast, { Toaster } from "svelte-french-toast";
 
     let fridgeMessageInputValue = "";
 
@@ -17,11 +18,15 @@
         fridgeMessages.update((fridgeMessagesStore) => {
             fridgeMessagesStore.push(newFridgeMessage);
             return fridgeMessagesStore;
-        })
+        });
 
         fridgeMessageInputValue = "";
+
+        toast.success("Fridge Message Added!");
     }
 </script>
+
+<Toaster />
 
 <div
     class:is-girl={child.isGirl}
