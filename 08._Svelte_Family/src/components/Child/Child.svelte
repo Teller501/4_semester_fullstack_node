@@ -2,6 +2,25 @@
     export let child;
     export let onShowLove;
     export let onTakeItem;
+
+    import { fridgeMessages } from "../../stores/fridgeMessageStore.js";
+
+    let fridgeMessageInputValue = "";
+
+    function submitFridgeMessage() {
+        const newFridgeMessage = {
+            creator: child.name,
+            message: fridgeMessageInputValue,
+        };
+        // fridgeMessages.set([...$fridgeMessages, newFridgeMessage]);
+
+        fridgeMessages.update((fridgeMessagesStore) => {
+            fridgeMessagesStore.push(newFridgeMessage);
+            return fridgeMessagesStore;
+        })
+
+        fridgeMessageInputValue = "";
+    }
 </script>
 
 <div
@@ -10,8 +29,21 @@
     class={child.familySheep || "not-a-sheep"}
 >
     <h3>{child.name}</h3>
+
+    <label for="fridgeMessageInput">Wrtie a Fridge Message</label>
+    <input
+        type="text"
+        name="fridgeMessageInput"
+        placeholder="Fridge Message"
+        bind:value={fridgeMessageInputValue}
+    />
+
+    <br />
+    <button on:click={submitFridgeMessage}>Write Fridge Message</button>
+    <br /> <br />
+
     <button on:click={() => onShowLove(child.name)}>Show Love 💜</button>
-    <button on:click={() => onTakeItem(child.name)}>Take Item</button>
+    <button on:click={onTakeItem}>Take Item</button>
 </div>
 
 <style>

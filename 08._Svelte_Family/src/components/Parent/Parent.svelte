@@ -1,5 +1,6 @@
 <script>
     import Child from "../Child/Child.svelte";
+    import { fridgeMessages } from "../../stores/fridgeMessageStore.js";
 
     export let parentName;
     export let myChildren;
@@ -21,9 +22,13 @@
         "👕",
     ];
 
-    function handleTakeItem(childName) {
+    function handleTakeItem() {
         console.log(treasureChest.pop());
         treasureChest = treasureChest;
+    }
+
+    function clearFridge() {
+        fridgeMessages.set([{message: "Svelte Family Fridge"}]);
     }
 </script>
 
@@ -35,6 +40,8 @@
     {/each}
 </p>
 <p>_________________________________________________</p>
+
+<button on:click={clearFridge}>Clear Fridge</button>
 
 {#each myChildren as child}
     <Child {child} onShowLove={handleShowLove} onTakeItem={handleTakeItem} />
