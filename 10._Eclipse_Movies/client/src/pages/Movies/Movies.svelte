@@ -1,12 +1,11 @@
 <script>
     import { onMount } from "svelte";
     import { BASE_URL } from "../../stores/generalStore.js";
+    import { fetchGet } from "../../util/api.js";
     let movies = [];
 
     onMount(async () => {
-        const response = await fetch($BASE_URL + "/api/movies");
-        const result = await response.json();
-        movies = result.data;
+        movies = (await fetchGet($BASE_URL + "/api/movies")) ?? [];
     });
 </script>
 
