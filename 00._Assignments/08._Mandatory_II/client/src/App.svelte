@@ -1,40 +1,32 @@
 <script>
-    import { fade } from "svelte/transition";
+    import { Router, Route, Link, navigate } from "svelte-navigator";
     import Login from "./components/Login.svelte";
     import Signup from "./components/Signup.svelte";
-    import { writable } from "svelte/store";
+    import PrivateRoute from "./components/PrivateRoute.svelte";
+    import Home from "./pages/Home/Home.svelte";
+    import ForgotPassword from "./components/ForgotPassword.svelte";
 
-    const isLogin = writable(true);
+    // Function to navigate programmatically
+    function goto(route) {
+        navigate(route, { replace: true });
+    }
 </script>
 
-<main>
+<Router>
     <div id="auth">
         <div class="switch">
-            <button
-                on:click={() => isLogin.set(true)}
-                class:active-button={$isLogin}
-                class:inactive-button={!$isLogin}>SIGN IN</button
-            >
-            <button
-                on:click={() => isLogin.set(false)}
-                class:active-button={!$isLogin}
-                class:inactive-button={$isLogin}>SIGN UP</button
-            >
+            <button on:click={() => goto("/")}>SIGN IN</button>
+            <button on:click={() => goto("/signup")}>SIGN UP</button>
         </div>
+        <Route path="/" component={Login} />
+        <Route path="/signup" component={Signup} />
 
-        <div class="form-container">
-            {#if $isLogin}
-                <div in:fade={{ duration: 300 }}>
-                    <Login />
-                </div>
-            {:else}
-                <div in:fade={{ duration: 300 }}>
-                    <Signup />
-                </div>
-            {/if}
-        </div>
+        <ForgotPassword />
     </div>
-</main>
+    <PrivateRoute path="/home">
+        <Home />
+    </PrivateRoute>
+</Router>
 
 <style>
     #auth {
@@ -56,24 +48,17 @@
         width: 100%;
         margin-bottom: 1rem;
     }
-
     button {
         background-color: transparent;
         color: #7aa2e3;
         font-size: 0.6rem;
         font-weight: bold;
+        cursor: pointer;
+        border: none;
+        background: none;
+        padding: 10px 20px;
     }
     button:focus {
         outline: none;
-    }
-
-    .active-button {
-        text-decoration: underline;
-        text-decoration-thickness: 2px;
-        color: #5294e2;
-    }
-
-    .inactive-button {
-        opacity: 0.6;
     }
 </style>
