@@ -1,5 +1,7 @@
 <script>
     import { fade } from "svelte/transition";
+
+    import ForgotPassword from "./ForgotPassword.svelte";
 </script>
 
 <div in:fade={{ duration: 300 }}>
@@ -25,3 +27,5 @@
         </div>
     </form>
 </div>
+
+<ForgotPassword />

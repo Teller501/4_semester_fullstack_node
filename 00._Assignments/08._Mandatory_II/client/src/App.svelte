@@ -4,7 +4,6 @@
     import Signup from "./components/Signup.svelte";
     import PrivateRoute from "./components/PrivateRoute.svelte";
     import Home from "./pages/Home/Home.svelte";
-    import ForgotPassword from "./components/ForgotPassword.svelte";
 
     // Function to navigate programmatically
     function goto(route) {
@@ -20,8 +19,6 @@
         </div>
         <Route path="/" component={Login} />
         <Route path="/signup" component={Signup} />
-
-        <ForgotPassword />
     </div>
     <PrivateRoute path="/home">
         <Home />

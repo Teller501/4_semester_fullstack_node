@@ -1,8 +1,15 @@
 <script>
     import Modal from "./Modal.svelte";
+    import toast, { Toaster } from "svelte-french-toast";
 
     let showModal = false;
+
+    function handleClick() {
+        toast.success("An email has been sent to reset your password.");
+    }
 </script>
+
+<Toaster />
 
 <button id="forgot-password-btn" on:click={() => (showModal = true)}
     >Forgot Password</button
@@ -12,7 +19,8 @@
     <h2 slot="header">Forgot Password</h2>
     <p>Enter your email address to reset your password.</p>
     <input type="email" placeholder="Email" id="email" />
-    <button id="reset-btn">Reset Password</button>
+
+    <button id="reset-btn" on:click={handleClick}>Reset Password</button>
 </Modal>
 
 <style>
