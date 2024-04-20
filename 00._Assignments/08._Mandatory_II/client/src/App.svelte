@@ -1,25 +1,27 @@
 <script>
-    import { Router, Route, Link, navigate } from "svelte-navigator";
+    import { Router, Route, navigate } from "svelte-navigator";
     import Login from "./components/Login.svelte";
     import Signup from "./components/Signup.svelte";
     import PrivateRoute from "./components/PrivateRoute.svelte";
     import Home from "./pages/Home/Home.svelte";
+    import { userStore } from "./stores/authStore.js";
 
-    // Function to navigate programmatically
     function goto(route) {
         navigate(route, { replace: true });
     }
 </script>
 
 <Router>
-    <div id="auth">
-        <div class="switch">
-            <button on:click={() => goto("/")}>SIGN IN</button>
-            <button on:click={() => goto("/signup")}>SIGN UP</button>
+    {#if !$userStore}
+        <div id="auth">
+            <div class="switch">
+                <button on:click={() => goto("/")}>SIGN IN</button>
+                <button on:click={() => goto("/signup")}>SIGN UP</button>
+            </div>
+            <Route path="/" component={Login} />
+            <Route path="/signup" component={Signup} />
         </div>
-        <Route path="/" component={Login} />
-        <Route path="/signup" component={Signup} />
-    </div>
+    {/if}
     <PrivateRoute path="/home">
         <Home />
     </PrivateRoute>

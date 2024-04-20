@@ -1,8 +1,11 @@
-export async function fetchGet(url) {
+export async function fetchGet(url, token) {
     let data;
     try {
         const response = await fetch(url, {
             credentials: "include",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
         const result = await response.json();
         data = result.data;
@@ -22,7 +25,7 @@ export async function fetchPost(url, body) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
         });
 
         status = response.status;
@@ -39,4 +42,3 @@ export async function fetchPost(url, body) {
         return { status, error: error.toString() };
     }
 }
-

@@ -11,7 +11,6 @@
     let confirmPassword = "test";
 
     async function handleSignup(event) {
-        console.log("Signup");
         event.preventDefault();
         if (password !== confirmPassword) {
             toast.error("Passwords do not match.", { duration: 3000 });
@@ -24,12 +23,12 @@
             password,
         };
 
-        const { status, data } = await fetchPost(`${$BASE_URL}/auth/signup`, user);
+        const { status, data } = await fetchPost(`${$BASE_URL}/api/signup`, user);
         if (status === 201) {
             toast.success("User created successfully, please login.", { duration: 5000 });
             navigate("/");
         } else {
-            let errorMessage = data && data.error ? data.error : "User creation failed.";
+            const errorMessage = data && data.error ? data.error : "User creation failed.";
             toast.error(errorMessage, { duration: 3000 });
         }
     }

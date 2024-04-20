@@ -41,6 +41,9 @@ const shoppingList = [
 	{ user: "teller", items: ["milk", "bread", "eggs"] },
 	{ user: "joe", items: ["butter", "cheese", "ham"] },
 	{ user: "jane", items: ["apples", "bananas", "oranges"] },
+	{ user: "test", items: ["milk", "bread", "eggs"] },
+	{ user: "test", items: ["milk", "bread", "eggs"] },
+	{ user: "joe", items: ["butter", "cheese", "ham"] },
 ];
 
 app.get("/api/shoppinglist", authenticateToken, (req, res) => {
