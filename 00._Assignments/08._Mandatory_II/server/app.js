@@ -27,6 +27,19 @@ const authRateLimiter = rateLimit({
 
 app.use("/auth", authRateLimiter);
 
+import authenticateToken from "./util/authenticateToken.js";
+
+const shoppingList = [
+	{ user: "teller", items: ["milk", "bread", "eggs"] },
+	{ user: "joe", items: ["butter", "cheese", "ham"] },
+	{ user: "jane", items: ["apples", "bananas", "oranges"] },
+];
+
+app.get("/api/shoppinglist", authenticateToken, (req, res) => {
+	res.send({ data: shoppingList.filter((list) => list.user === req.user.user.username) });
+});
+
+
 
 const PORT = process.env.PORT ?? 8080;
 app.listen(PORT, () => console.log("Server is running on port", PORT));

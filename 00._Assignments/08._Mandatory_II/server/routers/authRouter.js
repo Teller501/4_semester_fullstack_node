@@ -1,6 +1,10 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const router = Router();
+
+
 
 const users = [];
 const saltRounds = 14;
@@ -13,7 +17,8 @@ router.post("/auth/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            res.status(200).send("Login successful");
+            const token = jwt.sign({ user }, process.env.JWT_SECRET);
+            res.send({ data: token });
         } else {
             res.status(400).send("Invalid password");
         }
@@ -22,6 +27,7 @@ router.post("/auth/login", async (req, res) => {
         console.error(error);
         res.status(500).send("An error occurred");
     }
+
 });
 
 router.post("/auth/signup", async (req, res) => {
