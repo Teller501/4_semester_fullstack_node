@@ -16,7 +16,7 @@ let refreshTokens = [];
 router.post("/auth/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
     if (!user) {
-        return res.status(400).send("User not found");
+        return res.status(400).send({ error: "User not found" });
     }
 
     try {
@@ -24,16 +24,14 @@ router.post("/auth/login", async (req, res) => {
             const token = generateAccessToken(user);
             const refreshToken = jwt.sign(user, process.env.JWT_REFRESH_SECRET);
             refreshTokens.push(refreshToken);
-            res.send({ token: token, refreshToken: refreshToken});
+            res.send({ token: token, refreshToken: refreshToken });
         } else {
-            res.status(400).send("Invalid password");
+            res.status(400).send({ error: "Invalid password" });
         }
-
     } catch (error) {
         console.error(error);
-        res.status(500).send("An error occurred");
+        res.status(500).send({ error: "An error occurred" });
     }
-
 });
 
 router.post("/auth/signup", async (req, res) => {
@@ -46,10 +44,10 @@ router.post("/auth/signup", async (req, res) => {
         };
         users.push(user);
         console.log(users);
-        res.status(201).send("User created");
+        res.status(201).send({ data: "User created" });
     } catch (error) {
         console.error(error);
-        res.status(500).send("An error creating the user");
+        res.status(500).send({ error: "An error creating the user" });
     }
 });
 
