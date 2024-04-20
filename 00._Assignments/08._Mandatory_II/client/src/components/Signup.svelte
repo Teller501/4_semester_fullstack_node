@@ -5,8 +5,8 @@
 <div in:fade={{ duration: 300 }}>
     <form>
         <div class="form-element">
-            <label for="name">Username </label>
-            <input id="name" name="name" placeholder="Username" required />
+            <label for="username">Username </label>
+            <input id="username" name="username" placeholder="Username" required />
         </div>
 
         <div class="form-element">
