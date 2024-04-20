@@ -36,7 +36,7 @@ const shoppingList = [
 ];
 
 app.get("/api/shoppinglist", authenticateToken, (req, res) => {
-	res.send({ data: shoppingList.filter((list) => list.user === req.user.user.username) });
+	res.send({ data: shoppingList.filter((list) => list.user === req.user.username) });
 });
 
 
