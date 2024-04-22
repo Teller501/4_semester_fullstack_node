@@ -5,13 +5,16 @@
     import PrivateRoute from "./components/PrivateRoute.svelte";
     import Home from "./pages/Home/Home.svelte";
     import { userStore } from "./stores/authStore.js";
+    import Activation from "./components/Activation.svelte";
 
     function goto(route) {
+        console.log('Navigating to:', route);
         navigate(route, { replace: true });
     }
 </script>
 
 <Router>
+    <Route path="/activate/:token" component={Activation}/>
     {#if !$userStore}
         <div id="auth">
             <div class="switch">

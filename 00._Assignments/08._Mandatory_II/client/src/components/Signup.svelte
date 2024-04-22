@@ -25,7 +25,7 @@
 
         const { status, data } = await fetchPost(`${$BASE_URL}/api/signup`, user);
         if (status === 201) {
-            toast.success("User created successfully, please login.", { duration: 5000 });
+            toast.success("Signup successful. Please check your email to activate your account.", { duration: 5000 });
             navigate("/");
         } else {
             const errorMessage = data && data.error ? data.error : "User creation failed.";

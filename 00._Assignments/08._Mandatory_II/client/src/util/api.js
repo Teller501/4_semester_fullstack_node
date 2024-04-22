@@ -1,19 +1,25 @@
 export async function fetchGet(url, token) {
     let data;
+    let status;
+
     try {
         const response = await fetch(url, {
             credentials: "include",
+            method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
+
+        status = response.status;
+
         const result = await response.json();
         data = result.data;
     } catch (error) {
         console.error(error);
     }
 
-    return data;
+    return { data, status };
 }
 
 export async function fetchPost(url, body) {

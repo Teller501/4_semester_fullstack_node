@@ -21,7 +21,6 @@
 
         const { status, data } = await fetchPost(`${$BASE_URL}/api/login`, user);
         if (status === 200) {
-            console.log("suc");
             localStorage.setItem("token", data.token);
             localStorage.setItem("refreshToken", data.refreshToken);
 
