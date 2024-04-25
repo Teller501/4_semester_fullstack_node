@@ -1,11 +1,22 @@
 <script>
     import Modal from "./Modal.svelte";
     import toast, { Toaster } from "svelte-french-toast";
+    import { BASE_URL } from "../stores/generalStore";
+    import { fetchPost } from "../util/api";
 
     let showModal = false;
+    let email = '';
 
-    function handleClick() {
-        toast.success("An email has been sent to reset your password.");
+    async function handleForgotPassword() {
+        const { status, data } = await fetchPost(`${$BASE_URL}/api/forgot-password`, { email });
+
+        if (status === 200) {
+            toast.success("An email has been sent to reset your password.");
+        } else {
+            toast.error(data.error || "Failed to send reset link.", { duration: 3000 });
+        }
+
+        showModal = false;
     }
 </script>
 
@@ -18,9 +29,9 @@
 <Modal bind:showModal>
     <h2 slot="header">Forgot Password</h2>
     <p>Enter your email address to reset your password.</p>
-    <input type="email" placeholder="Email" id="email" />
+    <input type="email" placeholder="Email" id="email" bind:value={email} />
 
-    <button id="reset-btn" on:click={handleClick}>Reset Password</button>
+    <button id="reset-btn" on:click={handleForgotPassword}>Reset Password</button>
 </Modal>
 
 <style>

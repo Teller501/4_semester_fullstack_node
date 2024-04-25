@@ -35,6 +35,25 @@ async function sendActivationEmail(email, activationToken) {
     console.log(`Send this link to ${email}: ${activationLink}, ${data}`);
 }
 
+async function sendResetEmail(email, resetToken) {
+    const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
+    const message = {
+        from: "Admin <noreply@andersteller.dk>",
+        to: email,
+        subject: "Reset your password",
+        html: `<p>You've requrested to resest your password, please click the link below to reset:</p>
+        <a href="${resetLink}">Activate account</a>`,
+    }
+
+    const { data, error } = await resend.emails.send(message);
+
+    if (error) {
+        console.error(error);
+    }
+
+    console.log(`Send this link to ${email}: ${resetLink}, ${data}`);
+}
+
 router.get("/api/activate/:token", (req, res) => {
     const token = req.params.token;
     const username = activations[token];
@@ -116,6 +135,44 @@ router.post("/api/token", (req, res) => {
         res.json({ token: token });
     });
 });
+
+router.post("/api/forgot-password", async (req, res) => {
+    const { email } = req.body;
+    const user = users.find((user) => user.email === email);
+
+    if (!user) {
+        return res.status(400).send({ error: "User not found" });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetToken = resetToken;
+    user.resetTokenExpire = Date.now() + 3600000;
+
+    await sendResetEmail(email, resetToken);
+
+    res.send({ data: "Reset email sent" });
+});
+
+router.post("/api/reset-password/:token", async (req, res) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    const user = users.find(u => {
+        return u.resetToken === token && u.resetTokenExpire > Date.now();
+    });
+
+    if (!user) {
+        return res.status(400).send({ error: "Invalid or expired token" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    user.password = hashedPassword;
+    delete user.resetToken;
+    delete user.resetTokenExpire; 
+
+    res.send({ data: "Password reset" });
+});
+
 
 router.delete("/api/logout", (req, res) => {
     refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
