@@ -2,6 +2,9 @@ import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import redisClient from "../database/redisConnection.js"
+import db from "../database/connection.js"
+import { validateUserSignup, validateUserLogin, validateToken, validateForgotPassword, validateResetPassword } from "../middleware/userValidation.js";
 
 const router = Router();
 
@@ -9,7 +12,6 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const users = [];
-const activations = {};
 const saltRounds = 14;
 
 function generateAccessToken(user) {
@@ -54,34 +56,33 @@ async function sendResetEmail(email, resetToken) {
     console.log(`Send this link to ${email}: ${resetLink}, ${data}`);
 }
 
-router.get("/api/activate/:token", (req, res) => {
+router.get("/api/activate/:token", validateToken, async (req, res) => {
     const token = req.params.token;
-    const username = activations[token];
+    const username = await redisClient.get(token);
 
     if (!username) {
         return res.status(400).send({ error: "Invalid activation token" });
     }
 
-    const user = users.find((user) => user.username === username);
+    const user = db.get(`SELECT * FROM users WHERE username = ?`, [username]);
     if (!user) {
         return res.status(400).send({ error: "User not found" });
     }
 
-    user.isActive = true;
-    delete activations[token];
+    await db.run(`UPDATE users SET is_active = TRUE WHERE username = ?`, [username]);
+    await redisClient.del(token);
 
     res.send({ data: "User activated" });
 });
 
-let refreshTokens = [];
-
-router.post("/api/login", async (req, res) => {
-    const user = users.find((user) => user.username === req.body.username);
+router.post("/api/login", validateUserLogin, async (req, res) => {
+    const user = await db.get(`SELECT * FROM users WHERE username = ?`, [req.body.username]);
+    console.log(user);
     if (!user) {
         return res.status(400).send({ error: "User not found" });
     }
 
-    if (!user.isActive) {
+    if (!user.is_active) {
         return res.status(400).send({ error: "User not activated" });
     }
 
@@ -89,7 +90,7 @@ router.post("/api/login", async (req, res) => {
         if (await bcrypt.compare(req.body.password, user.password)) {
             const token = generateAccessToken(user);
             const refreshToken = jwt.sign(user, process.env.JWT_REFRESH_SECRET);
-            refreshTokens.push(refreshToken);
+            redisClient.set(refreshToken, user.username, { EX: 1800 });
             res.send({ token: token, refreshToken: refreshToken, user: user });
         } else {
             res.status(400).send({ error: "Invalid password" });
@@ -100,7 +101,7 @@ router.post("/api/login", async (req, res) => {
     }
 });
 
-router.post("/api/signup", async (req, res) => {
+router.post("/api/signup", validateUserSignup, async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
         const user = {
@@ -111,8 +112,8 @@ router.post("/api/signup", async (req, res) => {
         };
         const activationToken = crypto.randomBytes(32).toString("hex");
 
-        users.push(user);
-        activations[activationToken] = user.username;
+        const result = await db.run(`INSERT INTO users (username, email, password, is_active) VALUES (?, ?, ?, ?) `, [user.username, user.email, user.password, user.isActive]);
+        await redisClient.set(activationToken, user.username, { EX: 3600 });
 
         await sendActivationEmail(user.email, activationToken);
 
@@ -124,10 +125,12 @@ router.post("/api/signup", async (req, res) => {
     }
 });
 
-router.post("/api/token", (req, res) => {
+router.post("/api/token", validateToken, async (req, res) => {
     const refreshToken = req.body.token;
     if (!refreshToken) return res.sendStatus(401);
-    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+    
+    const token = await redisClient.get(refreshToken);
+    if (!token) return res.sendStatus(403);
 
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
@@ -136,46 +139,47 @@ router.post("/api/token", (req, res) => {
     });
 });
 
-router.post("/api/forgot-password", async (req, res) => {
+router.post("/api/forgot-password", validateForgotPassword, async (req, res) => {
     const { email } = req.body;
-    const user = users.find((user) => user.email === email);
+    const user = await db.get(`SELECT * FROM users WHERE email = ?`, [email]);
 
     if (!user) {
         return res.status(400).send({ error: "User not found" });
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetToken = resetToken;
-    user.resetTokenExpire = Date.now() + 3600000;
+    redisClient.set(resetToken, user.username, { EX: 3600 });
 
     await sendResetEmail(email, resetToken);
 
     res.send({ data: "Reset email sent" });
 });
 
-router.post("/api/reset-password/:token", async (req, res) => {
+router.post("/api/reset-password/:token", validateResetPassword, async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
 
-    const user = users.find(u => {
-        return u.resetToken === token && u.resetTokenExpire > Date.now();
-    });
-
-    if (!user) {
+    const username = await redisClient.get(token);
+    if (!username) {
         return res.status(400).send({ error: "Invalid or expired token" });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-    user.password = hashedPassword;
-    delete user.resetToken;
-    delete user.resetTokenExpire; 
+    const user = await db.get(`SELECT * FROM users WHERE username = ?`, [username]);
+    if (!user) {
+        return res.status(400).send({ error: "User not found" });
+    }
 
-    res.send({ data: "Password reset" });
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    await db.run(`UPDATE users SET password = ? WHERE username = ?`, [hashedPassword, username]);
+
+    await redisClient.del(token);
+
+    res.send({ data: "Password reset successfully" });
 });
 
 
 router.delete("/api/logout", (req, res) => {
-    refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+    redisClient.del(req.body.token);
     res.sendStatus(204);
 });
 
