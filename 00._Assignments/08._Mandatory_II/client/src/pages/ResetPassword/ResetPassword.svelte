@@ -17,7 +17,7 @@
             return;
         }
 
-        const { data, status } = await fetchPost(`${$BASE_URL}/api/reset-password/${token}`, { newPassword: password });
+        const { status } = await fetchPost(`${$BASE_URL}/api/reset-password/${token}`, { newPassword: password });
         if (status === 200) {
             toast.success("Password reset successful. You can now login.", { duration: 5000 });
             navigate("/");
