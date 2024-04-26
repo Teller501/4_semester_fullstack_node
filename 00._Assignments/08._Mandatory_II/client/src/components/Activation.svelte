@@ -18,6 +18,7 @@
             navigate("/");
         } else {
             toast.error("Account activation failed.", { duration: 3000 });
+            navigate("/");
         }
     });
 </script>

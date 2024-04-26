@@ -28,7 +28,7 @@ export function validateUserLogin(req, res, next) {
 }
 
 export function validateToken(req, res, next) {
-    const token = req.body.token;
+    const token = req.body.token || req.params.token;
 
     if (!token) {
         return res.status(401).send({ error: "Missing token" });
@@ -48,9 +48,10 @@ export function validateForgotPassword(req, res, next) {
 }
 
 export function validateResetPassword(req, res, next) {
-    const { password, token } = req.body;
+    const { newPassword } = req.body;
+    const { token } = req.params;
 
-    if (!password) {
+    if (!newPassword) {
         return res.status(400).send({ error: "Missing key in body: password" });
     }
     if (!token) {
