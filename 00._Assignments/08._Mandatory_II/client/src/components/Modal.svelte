@@ -3,10 +3,14 @@
 
     let dialog; // HTMLDialogElement
 
-    $: if (dialog && showModal) dialog.showModal();
+    $: if (dialog) {
+        if (showModal) dialog.showModal();
+        else dialog.close();
+    }
 </script>
 
 <dialog
+    class="ma-auto text-c-#3868ba bg-c-#f8f6e3 rounded-10 border-none p-4"
     bind:this={dialog}
     on:close={() => (showModal = false)}
     on:click|self={() => dialog.close()}
@@ -21,15 +25,6 @@
 </dialog>
 
 <style>
-    dialog {
-        color: #3868ba;
-        background-color: #f8f6e3;
-        max-width: 32em;
-        border-radius: 10px;
-        border: none;
-        padding: 0;
-        position: relative;
-    }
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.3);
     }

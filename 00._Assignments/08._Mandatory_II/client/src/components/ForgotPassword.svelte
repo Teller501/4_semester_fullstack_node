@@ -31,18 +31,10 @@
     <p>Enter your email address to reset your password.</p>
     <input type="email" placeholder="Email" id="email" bind:value={email} />
 
-    <button id="reset-btn" on:click={handleForgotPassword}>Reset Password</button>
+    <button class="text-c-white pa-2 mt-4" on:click={handleForgotPassword}>Reset Password</button>
 </Modal>
 
 <style>
-    #reset-btn {
-        color: white;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 1em;
-    }
 
     #forgot-password-btn {
         background-color: transparent;

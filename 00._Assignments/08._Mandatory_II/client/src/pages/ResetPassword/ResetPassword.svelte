@@ -29,8 +29,10 @@
 
 <Toaster />
 
-<input type="password" placeholder="Password" id="password" bind:value={password} />
-<input type="password" placeholder="Confirm Password" id="confirm-password" bind:value={confirmPassword} />
+<div class="bg-c-#f8f6e3 rounded-4 shadow-sm w-80 d-grid j-content-center ">
+    <h2 class="pa-4 text-c-#7aa2e3">Change your password</h2>
+    <input class="ma-4 max-w-64" type="password" placeholder="Password" id="password" bind:value={password} />
+    <input class="ma-4 max-w-64" type="password" placeholder="Confirm Password" id="confirm-password" bind:value={confirmPassword} />
 
-<button id="reset-btn" on:click={handleResetPassword}>Reset Password</button>
-
+    <button class="ma-4 max-w-64" id="reset-btn" on:click={handleResetPassword}>Reset Password</button>
+</div>
