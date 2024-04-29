@@ -129,13 +129,13 @@ router.post("/api/token", validateToken, async (req, res) => {
     const refreshToken = req.body.token;
     if (!refreshToken) return res.sendStatus(401);
     
-    const token = await redisClient.get(refreshToken);
-    if (!token) return res.sendStatus(403);
+    const foundToken = await redisClient.get(refreshToken);
+    if (!foundToken) return res.sendStatus(403);
 
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
-        const token = generateAccessToken({ username: user.username });
-        res.json({ token: token });
+        const newToken = generateAccessToken({ username: user.username });
+        res.json({ token: newToken });
     });
 });
 
@@ -148,7 +148,7 @@ router.post("/api/forgot-password", validateForgotPassword, async (req, res) => 
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    redisClient.set(resetToken, user.username, { EX: 3600 });
+    redisClient.set(user.email, resetToken, { EX: 3600 });
 
     await sendResetEmail(email, resetToken);
 

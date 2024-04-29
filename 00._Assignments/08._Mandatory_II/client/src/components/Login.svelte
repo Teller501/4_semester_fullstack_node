@@ -5,7 +5,7 @@
     import toast, { Toaster } from "svelte-french-toast";
     import { BASE_URL } from "../stores/generalStore.js";
     import { navigate } from "svelte-navigator";
-    import { userStore } from "../stores/authStore.js";
+    import { userStore, tokenStore, refreshTokenStore } from "../stores/authStore.js";
 
 
     let username = "test";
@@ -21,10 +21,10 @@
 
         const { status, data } = await fetchPost(`${$BASE_URL}/api/login`, user);
         if (status === 200) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("refreshToken", data.refreshToken);
 
             userStore.set(data.user);
+            tokenStore.set(data.token);
+            refreshTokenStore.set(data.refreshToken);
 
             console.log("userStore", $userStore)
             navigate("/home");
