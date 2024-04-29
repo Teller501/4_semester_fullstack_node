@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { navigate } from "svelte-navigator";
+import { refreshTokenStore, tokenStore, userStore } from "../stores/authStore";
 
 export function isTokenExpired(token) {
     try {
@@ -13,22 +14,29 @@ export function isTokenExpired(token) {
     }
 }
 
-
 export async function refreshToken(refreshToken) {
-    const response = await fetch("http://localhost:8080/api/token", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token: refreshToken }),
-    });
+    try {
+        const response = await fetch("http://localhost:8080/api/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: refreshToken }),
+        });
 
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        return data.token;
-    } else {
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            tokenStore.set(data.token);
+            return data.token;
+        } else {
+            logoutUser();
+            navigate("/", {
+                replace: true,
+            });
+        }
+    } catch (error) {
+        console.error("Error refreshing token:", error);
         logoutUser();
         navigate("/", {
             replace: true,
@@ -37,6 +45,7 @@ export async function refreshToken(refreshToken) {
 }
 
 export function logoutUser() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
+    tokenStore.set(null);
+    refreshTokenStore.set(null);
+    userStore.set(null);
 }
