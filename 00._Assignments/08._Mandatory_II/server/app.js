@@ -37,17 +37,11 @@ app.use(authRouter);
 
 import authenticateToken from "./util/authenticateToken.js";
 
-const shoppingList = [
-	{ user: "teller", items: ["milk", "bread", "eggs"] },
-	{ user: "joe", items: ["butter", "cheese", "ham"] },
-	{ user: "jane", items: ["apples", "bananas", "oranges"] },
-	{ user: "test", items: ["milk", "bread", "eggs"] },
-	{ user: "test", items: ["milk", "bread", "eggs"] },
-	{ user: "joe", items: ["butter", "cheese", "ham"] },
-];
 
-app.get("/api/shoppinglist", authenticateToken, (req, res) => {
-	res.send({ data: shoppingList.filter((list) => list.user === req.user.username) });
+app.get("/api/quote", authenticateToken, async (req, res) => {
+	const response = await fetch("https://api.kanye.rest");
+	const data = await response.json();
+	res.send({ data: data.quote });
 });
 
 

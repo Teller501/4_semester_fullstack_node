@@ -4,19 +4,14 @@
     import { BASE_URL } from "../../stores/generalStore";
     import { tokenStore } from "../../stores/authStore";
 
-    let shoppingList = [];
+    let quote = "";
 
     onMount(async () => {
-        shoppingList =
-            (await fetchGet(`${$BASE_URL}/api/shoppinglist`, $tokenStore)) ??
-            [];
+        const { data } = await fetchGet(`${$BASE_URL}/api/quote`, $tokenStore);
+        quote = data;
     });
 </script>
 
 
-<h1>Home</h1>
-
-<!-- {#each shoppingList as item}
-    <h3>{item.user}</h3>
-    <p>{item.items}</p>
-{/each} -->
+<h3>{quote}</h3>
+<p>Kanye West</p>
