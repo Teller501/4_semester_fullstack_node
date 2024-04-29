@@ -13,9 +13,6 @@ app.use(
     })
 );
 
-import authRouter from './routers/authRouter.js';
-app.use(authRouter);
-
 import { rateLimit } from 'express-rate-limit'
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, 
@@ -33,7 +30,10 @@ const authRateLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-app.use("/auth", authRateLimiter);
+app.use(["/api/login", "/api/signup", "/api/activate", "/api/forgot-password", "/api/reset-password", "/api/token"], authRateLimiter);
+
+import authRouter from './routers/authRouter.js';
+app.use(authRouter);
 
 import authenticateToken from "./util/authenticateToken.js";
 
