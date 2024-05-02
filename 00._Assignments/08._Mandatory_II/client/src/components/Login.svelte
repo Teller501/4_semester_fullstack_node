@@ -26,7 +26,6 @@
             tokenStore.set(data.token);
             refreshTokenStore.set(data.refreshToken);
 
-            console.log("userStore", $userStore)
             navigate("/home");
         } else {
             const errorMessage = data && data.error ? data.error : "Wrong username or password.";

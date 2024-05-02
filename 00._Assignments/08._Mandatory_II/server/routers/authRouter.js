@@ -34,7 +34,6 @@ async function sendActivationEmail(email, activationToken) {
         console.error(error);
     }
 
-    console.log(`Send this link to ${email}: ${activationLink}, ${data}`);
 }
 
 async function sendResetEmail(email, resetToken) {
@@ -53,7 +52,6 @@ async function sendResetEmail(email, resetToken) {
         console.error(error);
     }
 
-    console.log(`Send this link to ${email}: ${resetLink}, ${data}`);
 }
 
 router.get("/api/activate/:token", validateToken, async (req, res) => {
@@ -77,7 +75,6 @@ router.get("/api/activate/:token", validateToken, async (req, res) => {
 
 router.post("/api/login", validateUserLogin, async (req, res) => {
     const user = await db.get(`SELECT * FROM users WHERE username = ?`, [req.body.username]);
-    console.log(user);
     if (!user) {
         return res.status(400).send({ error: "User not found" });
     }
@@ -117,7 +114,6 @@ router.post("/api/signup", validateUserSignup, async (req, res) => {
 
         await sendActivationEmail(user.email, activationToken);
 
-        console.log(users);
         res.status(201).send({ data: "User created" });
     } catch (error) {
         console.error(error);

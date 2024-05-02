@@ -26,7 +26,6 @@ export async function refreshToken(refreshToken) {
 
         if (response.ok) {
             const data = await response.json();
-            console.log(data);
             tokenStore.set(data.token);
             return data.token;
         } else {
