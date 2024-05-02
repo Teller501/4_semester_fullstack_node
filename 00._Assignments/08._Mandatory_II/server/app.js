@@ -30,7 +30,7 @@ const authRateLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-app.use(["/api/login", "/api/signup", "/api/activate", "/api/forgot-password", "/api/reset-password", "/api/token"], authRateLimiter);
+app.use(["/api/login", "/api/signup", "/api/activate", "/api/forgot-password", "/api/reset-password", "/api/token", "/api/validate-token"], authRateLimiter);
 
 import authRouter from './routers/authRouter.js';
 app.use(authRouter);

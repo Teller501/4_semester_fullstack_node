@@ -43,7 +43,7 @@ async function sendResetEmail(email, resetToken) {
         to: email,
         subject: "Reset your password",
         html: `<p>You've requrested to resest your password, please click the link below to reset:</p>
-        <a href="${resetLink}">Activate account</a>`,
+        <a href="${resetLink}">Reset password</a>`,
     }
 
     const { data, error } = await resend.emails.send(message);
@@ -144,7 +144,7 @@ router.post("/api/forgot-password", validateForgotPassword, async (req, res) => 
     }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
-    redisClient.set(user.email, resetToken, { EX: 3600 });
+    redisClient.set(resetToken, user.username, { EX: 3600 });
 
     await sendResetEmail(email, resetToken);
 
@@ -172,6 +172,19 @@ router.post("/api/reset-password/:token", validateResetPassword, async (req, res
 
     res.send({ data: "Password reset successfully" });
 });
+
+router.post("/api/validate-token", async (req, res) => {
+    const token = req.body.token;
+    
+    const validToken = await redisClient.get(token);
+
+    if (!validToken) {
+        return res.status(400).send({ error: "Invalid or expired token" });
+    }
+
+    res.send({ data: "Token is valid" });
+});
+
 
 
 router.delete("/api/logout", (req, res) => {
