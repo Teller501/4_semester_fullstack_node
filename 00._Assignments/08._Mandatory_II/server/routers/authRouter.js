@@ -24,7 +24,7 @@ async function sendActivationEmail(email, activationToken) {
         from: "Admin <noreply@andersteller.dk>",
         to: email,
         subject: "Please activate your account",
-        html: `<p>Thank you for signing up at Mandatory II. Please click the link below to activate your account:</p>
+        html: `<p>Thank you for signing up at Mandatory II! Please click the link below to activate your account:</p>
         <a href="${activationLink}">Activate account</a>`,
     };
 
