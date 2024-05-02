@@ -58,6 +58,7 @@
     <Route path="/activate/:token" component={Activation} />
     <Route path="/reset-password/:token" component={ResetPassword} />
     <Route path="/"><Auth /></Route>
+    <Route path="*"><Auth /></Route>
     <PrivateRoute path="/home">
         <Home />
     </PrivateRoute>

@@ -1,5 +1,6 @@
 <script>
     import { navigate, useParams } from 'svelte-navigator';
+    import { onMount } from 'svelte';
     import toast, { Toaster } from "svelte-french-toast";
     import { BASE_URL } from '../../stores/generalStore';
     import { fetchPost } from '../../util/api';
@@ -10,6 +11,21 @@
 
     let password = '';
     let confirmPassword = '';
+
+    
+    onMount(async () => {
+        if (!token) {
+            navigate("/", { replace: true })
+        }
+
+        const { status } = await fetchPost(`${$BASE_URL}/api/validate-token`, { token });
+        if (status !== 200) {
+            toast.error("Invalid or expired token.", { duration: 3000 });
+            navigate("/");
+            return;
+        }
+    });
+
 
     async function handleResetPassword() {
         if (password !== confirmPassword) {
