@@ -145,6 +145,7 @@ router.post("/api/forgot-password", validateForgotPassword, async (req, res) => 
 
     const resetToken = crypto.randomBytes(32).toString("hex");
     redisClient.set(resetToken, user.username, { EX: 3600 });
+    redisClient.set(resetToken, user.username, { EX: 3600 });
 
     await sendResetEmail(email, resetToken);
 
