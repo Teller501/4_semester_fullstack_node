@@ -5,10 +5,10 @@
     import { fetchPost } from "../util/api.js";
     import { navigate } from "svelte-navigator";
 
-    let username = "test";
-    let email = "test@mail.dk";
-    let password = "test";
-    let confirmPassword = "test";
+    let username = "";
+    let email = "";
+    let password = "";
+    let confirmPassword = "";
 
     async function handleSignup(event) {
         event.preventDefault();

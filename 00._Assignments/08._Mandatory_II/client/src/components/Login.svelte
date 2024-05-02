@@ -8,8 +8,8 @@
     import { userStore, tokenStore, refreshTokenStore } from "../stores/authStore.js";
 
 
-    let username = "test";
-    let password = "test";
+    let username = "";
+    let password = "";
 
     async function handleLogin(event) {
         event.preventDefault();
